@@ -28,13 +28,20 @@
           bindings = <&kp LS(ENTER)>;
       };
 
+      normal_enter: normal_enter {
+          compatible = "zmk,behavior-macro";
+          label = "NORMAL_ENTER";
+          #binding-cells = <0>;
+          bindings = <&kp ENTER>;
+      };
+
       enter_soft: enter_soft {
           compatible = "zmk,behavior-hold-tap";
           label = "ENTER_SOFT";
           #binding-cells = <0>;
           tapping-term-ms = <300>;
           flavor = "tap-preferred";
-          bindings = <&soft_enter>, <&kp ENTER>;
+          bindings = <&soft_enter>, <&normal_enter>;
       };
     };
 
