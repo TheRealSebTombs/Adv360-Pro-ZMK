@@ -4,6 +4,7 @@
 #include <dt-bindings/zmk/rgb.h>
 #include <dt-bindings/zmk/stp.h>
 #include <dt-bindings/zmk/backlight.h>
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 1000
 #include <dt-bindings/zmk/pointing.h>
 
 / {
@@ -19,6 +20,15 @@
           quick_tap_ms = <175>;
           flavor = "tap-preferred";
           bindings = <&kp>, <&kp>;
+      };
+
+      caps_mouse: caps_mouse {
+          compatible = "zmk,behavior-hold-tap";
+          label = "CAPS_MOUSE";
+          #binding-cells = <2>;
+          tapping-term-ms = <200>;
+          flavor = "hold-preferred";
+          bindings = <&mo>, <&kp>;
       };
 
       soft_enter: soft_enter {
@@ -53,9 +63,9 @@
       bindings = <
         &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &tog 1                                                           &mo 3 &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
         &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                            &none &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
-        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp HOME &kp END &kp DEL &mo 4                  &none &kp H  &kp J  &kp K     &kp L    &kp SEMI &kp SQT
+        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp HOME &kp END &kp LGUI &kp DEL               &none &kp H  &kp J  &kp K     &kp L    &kp SEMI &kp SQT
         &kp LSHFT &kp Z     &kp X    &kp C    &kp V      &kp B                            &kp LCTRL &kp PG_UP                         &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-        &mo 2     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_soft 0 0             &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo 2
+        &mo 2     &kp GRAVE &caps_mouse 4 CAPS &kp LEFT &kp RIGHT                &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_soft 0 0             &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo 2
       >;
     };
     keypad {
@@ -74,8 +84,8 @@
         &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6 &tog 1                                           &mo 3 &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12
         &trans &trans &trans &trans &trans &trans  &none                                           &none &trans &trans &trans &trans  &trans  &trans
         &trans &trans &trans &trans &trans &trans  &none        &trans &trans &trans &trans        &none &trans &trans &trans &trans  &trans  &trans
-        &trans &trans &trans &trans &trans &trans                      &trans &trans                     &trans &trans &trans &trans  &trans  &trans
-        &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans              &trans &trans &trans  &trans  &trans
+        &trans &trans &trans &trans &trans &trans                      &trans &trans                     &trans &trans &trans &trans  &trans &trans
+        &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans              &trans &trans &trans  &trans &trans
       >;
     };
     mod {
@@ -92,8 +102,8 @@
       display-name = "Red";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &mmv MOVE_UP &trans &trans &trans                                &trans &trans &trans &trans &trans &trans &trans
-        &trans &trans &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &trans &trans              &trans &trans &trans &trans        &trans &trans &mkp MB1 &mkp MB3 &mkp MB2 &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &mkp MB1 &mmv MOVE_UP &mkp MB2 &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
       >;
