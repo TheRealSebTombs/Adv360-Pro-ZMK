@@ -62,9 +62,32 @@
           compatible = "zmk,behavior-hold-tap";
           label = "K_CLICK";
           #binding-cells = <2>;
-          tapping-term-ms = <300>;
+          tapping-term-ms = <150>;
           flavor = "tap-preferred";
           bindings = <&lmb_double>, <&lmb_single>;
+      };
+
+      rmb_single: rmb_single {
+          compatible = "zmk,behavior-macro";
+          label = "RMB_SINGLE";
+          #binding-cells = <0>;
+          bindings = <&mkp MB2>;
+      };
+
+      mmb_single: mmb_single {
+          compatible = "zmk,behavior-macro";
+          label = "MMB_SINGLE";
+          #binding-cells = <0>;
+          bindings = <&mkp MB3>;
+      };
+
+      o_click: o_click {
+          compatible = "zmk,behavior-hold-tap";
+          label = "O_CLICK";
+          #binding-cells = <2>;
+          tapping-term-ms = <150>;
+          flavor = "tap-preferred";
+          bindings = <&mmb_single>, <&rmb_single>;
       };
 
       mouse_cmd: mouse_cmd {
@@ -93,7 +116,7 @@
           compatible = "zmk,behavior-hold-tap";
           label = "ENTER_SOFT";
           #binding-cells = <2>;
-          tapping-term-ms = <300>;
+          tapping-term-ms = <150>;
           flavor = "tap-preferred";
           bindings = <&soft_enter>, <&normal_enter>;
       };
@@ -129,7 +152,7 @@
         &trans &trans &trans &trans &trans &trans  &none                                           &none &trans &trans &trans &trans  &trans  &trans
         &trans &trans &trans &trans &trans &trans  &none        &trans &trans &trans &trans        &none &trans &trans &trans &trans  &trans  &trans
         &trans &trans &trans &trans &trans &trans                      &trans &trans                     &trans &trans &trans &trans  &trans &trans
-        &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans              &trans &trans &trans  &trans &trans
+        &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans              &trans &trans &trans  &trans  &trans
       >;
     };
     mod {
@@ -146,10 +169,10 @@
       display-name = "Red";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &trans &trans &trans &trans                                      &trans &msc SCRL_UP &trans &mmv MOVE(0,-1800) &mkp MB2 &trans &trans
-        &trans &trans &trans &trans &trans &trans &trans           &trans &trans &mouse_cmd &trans               &trans &msc SCRL_DOWN &mmv MOVE(-1800,0) &k_click 0 0 &mmv MOVE(1800,0) &trans &trans
-        &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &mmv MOVE(0,1800) &trans &trans &trans
-        &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &trans              &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans                                      &trans &msc SCRL_UP &k_click 0 0 &mmv MOVE(0,-1800) &o_click 0 0 &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans           &trans &trans &mouse_cmd &trans               &trans &msc SCRL_DOWN &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &trans &trans
+        &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
+        &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &trans              &kp LEFT &kp DOWN &trans &trans &trans
       >;
     };
 
