@@ -109,6 +109,22 @@
           keep-mods = <(MOD_LGUI|MOD_RGUI)>;
       };
 
+      fn_up_cmd: fn_up_cmd {
+          compatible = "zmk,behavior-mod-morph";
+          label = "FN_UP_CMD";
+          #binding-cells = <0>;
+          bindings = <&kp PG_UP>, <&kp HOME>;
+          mods = <(MOD_LGUI|MOD_RGUI)>;
+      };
+
+      fn_down_cmd: fn_down_cmd {
+          compatible = "zmk,behavior-mod-morph";
+          label = "FN_DOWN_CMD";
+          #binding-cells = <0>;
+          bindings = <&kp PG_DN>, <&kp END>;
+          mods = <(MOD_LGUI|MOD_RGUI)>;
+      };
+
       soft_enter: soft_enter {
           compatible = "zmk,behavior-macro";
           label = "SOFT_ENTER";
@@ -163,7 +179,7 @@
         &trans &trans &trans &trans &trans &trans  &none                                           &none &trans &trans &trans &trans  &trans  &trans
         &trans &trans &trans &trans &trans &trans  &none        &trans &trans &trans &trans        &none &trans &trans &trans &trans  &trans  &trans
         &trans &trans &trans &trans &trans &trans                      &trans &trans                     &trans &trans &trans &trans  &trans &trans
-        &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans              &trans &trans &trans  &trans  &trans
+        &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans              &fn_up_cmd &fn_down_cmd &trans  &trans  &trans
       >;
     };
     mod {
