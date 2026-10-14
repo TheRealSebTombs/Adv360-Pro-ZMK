@@ -290,24 +290,6 @@
           mods = <(MOD_LGUI|MOD_RGUI)>;
       };
 
-      scroll_y_cmd: scroll_y_cmd {
-          compatible = "zmk,behavior-mod-morph";
-          label = "SCROLL_Y_CMD";
-          #binding-cells = <0>;
-          bindings = <&msc SCRL_UP>, <&msc SCRL_LEFT>;
-          mods = <(MOD_LGUI|MOD_RGUI)>;
-          keep-mods = <(MOD_LGUI|MOD_RGUI)>;
-      };
-
-      scroll_h_cmd: scroll_h_cmd {
-          compatible = "zmk,behavior-mod-morph";
-          label = "SCROLL_H_CMD";
-          #binding-cells = <0>;
-          bindings = <&msc SCRL_DOWN>, <&msc SCRL_RIGHT>;
-          mods = <(MOD_LGUI|MOD_RGUI)>;
-          keep-mods = <(MOD_LGUI|MOD_RGUI)>;
-      };
-
       fn_up_cmd: fn_up_cmd {
           compatible = "zmk,behavior-mod-morph";
           label = "FN_UP_CMD";
@@ -395,8 +377,8 @@
       display-name = "Red";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &mmv MOVE(0,-3600) &trans &trans &trans                           &trans &scroll_y_cmd &drag_start &trans &trans &trans &trans
-        &trans &trans &mmv MOVE(-3600,0) &mmv MOVE(0,3600) &mmv MOVE(3600,0) &trans &trans     &trans &scroll_h_cmd &k_click 0 0 &trans &o_click 0 0 &trans &trans
+        &trans &trans &trans &mmv MOVE(0,-3600) &trans &trans &trans                           &trans &trans &drag_start &trans &trans &trans &trans
+        &trans &trans &mmv MOVE(-3600,0) &mmv MOVE(0,3600) &mmv MOVE(3600,0) &trans &trans     &trans &trans &k_click 0 0 &trans &o_click 0 0 &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
       >;
@@ -417,16 +399,22 @@
       display-name = "ArrowNav";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &kp UP &trans &trans &trans
-        &trans &trans &trans &trans &trans &trans &trans           &trans &trans &trans &trans               &trans &trans &kp LEFT &kp DOWN &kp RIGHT &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans                                      &trans &msc SCRL_UP &trans &kp UP &trans &trans &trans
+        &trans &trans &trans &trans &mo 7 &trans &trans           &trans &trans &trans &trans               &trans &msc SCRL_DOWN &kp LEFT &kp DOWN &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
       >;
     };
 
     extra4 {
-      display-name = "Yellow";
-      status = "reserved";
+      display-name = "HorizontalScroll";
+      bindings = <
+        &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans                                      &trans &msc SCRL_LEFT &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans           &trans &trans &trans &trans               &trans &msc SCRL_RIGHT &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
+      >;
     };
   };
 };
