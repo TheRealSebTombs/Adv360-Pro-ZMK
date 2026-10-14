@@ -109,7 +109,7 @@
           compatible = "zmk,behavior-macro";
           label = "DRAG_ABORT";
           #binding-cells = <0>;
-          bindings = <&macro_release &mkp MB1>, <&macro_tap &kp ESC &tog 5>;
+          bindings = <&macro_release &mkp MB1>, <&macro_tap &kp LG(LS(A)) &tog 5>;
       };
 
       screenshot_full_clip: screenshot_full_clip {
@@ -401,7 +401,7 @@
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &drag_release &trans &trans &trans &trans
-        &drag_abort &trans &trans &trans &trans &trans &trans           &trans &trans &trans &trans               &trans &trans &drag_release &trans &trans &trans &trans
+        &drag_abort &trans &trans &trans &trans &trans &trans           &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
       >;
