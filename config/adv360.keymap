@@ -112,6 +112,52 @@
           bindings = <&macro_release &mkp MB1>, <&macro_tap &kp ESC &tog 5>;
       };
 
+      screenshot_full_clip: screenshot_full_clip {
+          compatible = "zmk,behavior-macro";
+          label = "SCREENSHOT_FULL_CLIP";
+          #binding-cells = <0>;
+          bindings = <&kp LC(LS(LG(N3)))>;
+      };
+
+      screenshot_full_file: screenshot_full_file {
+          compatible = "zmk,behavior-macro";
+          label = "SCREENSHOT_FULL_FILE";
+          #binding-cells = <0>;
+          bindings = <&kp LS(LG(N3))>;
+      };
+
+      screenshot_portion_clip: screenshot_portion_clip {
+          compatible = "zmk,behavior-macro";
+          label = "SCREENSHOT_PORTION_CLIP";
+          #binding-cells = <0>;
+          bindings = <&kp LC(LS(LG(N4)))>;
+      };
+
+      screenshot_portion_file: screenshot_portion_file {
+          compatible = "zmk,behavior-macro";
+          label = "SCREENSHOT_PORTION_FILE";
+          #binding-cells = <0>;
+          bindings = <&kp LS(LG(N4))>;
+      };
+
+      screenshot3: screenshot3 {
+          compatible = "zmk,behavior-hold-tap";
+          label = "SCREENSHOT_3";
+          #binding-cells = <2>;
+          tapping-term-ms = <150>;
+          flavor = "tap-preferred";
+          bindings = <&screenshot_full_file>, <&screenshot_full_clip>;
+      };
+
+      screenshot4: screenshot4 {
+          compatible = "zmk,behavior-hold-tap";
+          label = "SCREENSHOT_4";
+          #binding-cells = <2>;
+          tapping-term-ms = <150>;
+          flavor = "tap-preferred";
+          bindings = <&screenshot_portion_file>, <&screenshot_portion_clip>;
+      };
+
       scroll_y_cmd: scroll_y_cmd {
           compatible = "zmk,behavior-mod-morph";
           label = "SCROLL_Y_CMD";
@@ -177,8 +223,8 @@
       display-name = "Base";
       bindings = <
         &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &tog 1                                                           &mo 3 &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
-        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                            &none &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
-        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp HOME &kp END &kp LGUI &kp DEL               &none &kp H  &kp J  &f_mouse 4 K &kp L    &kp SEMI &kp SQT
+        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                            &screenshot3 0 0 &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
+        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp HOME &kp END &kp LGUI &kp DEL               &screenshot4 0 0 &kp H  &kp J  &f_mouse 4 K &kp L    &kp SEMI &kp SQT
         &kp LSHFT &kp Z     &kp X    &kp C    &kp V      &kp B                            &kp LCTRL &kp PG_UP                         &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
         &mo 2     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_soft 0 0             &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo 2
       >;
