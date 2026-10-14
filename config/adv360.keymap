@@ -158,6 +158,132 @@
           bindings = <&screenshot_portion_file>, <&screenshot_portion_clip>;
       };
 
+      c_paste_launcher: c_paste_launcher {
+          compatible = "zmk,behavior-macro";
+          label = "C_PASTE_LAUNCHER";
+          #binding-cells = <0>;
+          bindings = <&kp LA(LS(C))>;
+      };
+
+      c_copy: c_copy {
+          compatible = "zmk,behavior-macro";
+          label = "C_COPY";
+          #binding-cells = <0>;
+          bindings = <&kp C>;
+      };
+
+      c_cmd_dual: c_cmd_dual {
+          compatible = "zmk,behavior-hold-tap";
+          label = "C_CMD_DUAL";
+          #binding-cells = <2>;
+          tapping-term-ms = <150>;
+          flavor = "tap-preferred";
+          bindings = <&c_paste_launcher>, <&c_copy>;
+      };
+
+      c_cmd: c_cmd {
+          compatible = "zmk,behavior-mod-morph";
+          label = "C_CMD";
+          #binding-cells = <0>;
+          bindings = <&kp C>, <&c_cmd_dual 0 0>;
+          mods = <(MOD_LGUI|MOD_RGUI)>;
+          keep-mods = <(MOD_LGUI|MOD_RGUI)>;
+      };
+
+      v_paste_in_place: v_paste_in_place {
+          compatible = "zmk,behavior-macro";
+          label = "V_PASTE_IN_PLACE";
+          #binding-cells = <0>;
+          bindings = <&kp LA(LS(V))>;
+      };
+
+      v_paste: v_paste {
+          compatible = "zmk,behavior-macro";
+          label = "V_PASTE";
+          #binding-cells = <0>;
+          bindings = <&kp V>;
+      };
+
+      v_cmd_dual: v_cmd_dual {
+          compatible = "zmk,behavior-hold-tap";
+          label = "V_CMD_DUAL";
+          #binding-cells = <2>;
+          tapping-term-ms = <150>;
+          flavor = "tap-preferred";
+          bindings = <&v_paste_in_place>, <&v_paste>;
+      };
+
+      v_cmd: v_cmd {
+          compatible = "zmk,behavior-mod-morph";
+          label = "V_CMD";
+          #binding-cells = <0>;
+          bindings = <&kp V>, <&v_cmd_dual 0 0>;
+          mods = <(MOD_LGUI|MOD_RGUI)>;
+          keep-mods = <(MOD_LGUI|MOD_RGUI)>;
+      };
+
+      seek_ctrl: seek_ctrl {
+          compatible = "zmk,behavior-macro";
+          label = "SEEK_CTRL";
+          #binding-cells = <0>;
+          bindings = <&kp LCTRL>;
+      };
+
+      cmd_opt_enter_tap: cmd_opt_enter_tap {
+          compatible = "zmk,behavior-macro";
+          label = "CMD_OPT_ENTER_TAP";
+          #binding-cells = <0>;
+          bindings = <&kp LG(LA(ENTER))>;
+      };
+
+      seek_enter: seek_enter {
+          compatible = "zmk,behavior-hold-tap";
+          label = "SEEK_ENTER";
+          #binding-cells = <2>;
+          tapping-term-ms = <150>;
+          flavor = "tap-preferred";
+          bindings = <&seek_ctrl>, <&cmd_opt_enter_tap>;
+      };
+
+      gui_soft_enter: gui_soft_enter {
+          compatible = "zmk,behavior-macro";
+          label = "GUI_SOFT_ENTER";
+          #binding-cells = <0>;
+          bindings = <&kp LG(LS(ENTER))>;
+      };
+
+      gui_normal_enter: gui_normal_enter {
+          compatible = "zmk,behavior-macro";
+          label = "GUI_NORMAL_ENTER";
+          #binding-cells = <0>;
+          bindings = <&kp LG(ENTER)>;
+      };
+
+      gui_enter_soft: gui_enter_soft {
+          compatible = "zmk,behavior-hold-tap";
+          label = "GUI_ENTER_SOFT";
+          #binding-cells = <2>;
+          tapping-term-ms = <150>;
+          flavor = "tap-preferred";
+          bindings = <&gui_soft_enter>, <&gui_normal_enter>;
+      };
+
+      enter_alt_check: enter_alt_check {
+          compatible = "zmk,behavior-mod-morph";
+          label = "ENTER_ALT_CHECK";
+          #binding-cells = <0>;
+          bindings = <&gui_enter_soft 0 0>, <&seek_enter 0 0>;
+          mods = <(MOD_LALT|MOD_RALT)>;
+      };
+
+      enter_cmd_check: enter_cmd_check {
+          compatible = "zmk,behavior-mod-morph";
+          label = "ENTER_CMD_CHECK";
+          #binding-cells = <0>;
+          bindings = <&enter_soft 0 0>, <&enter_alt_check>;
+          mods = <(MOD_LGUI|MOD_RGUI)>;
+      };
+
       scroll_y_cmd: scroll_y_cmd {
           compatible = "zmk,behavior-mod-morph";
           label = "SCROLL_Y_CMD";
@@ -225,8 +351,8 @@
         &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &tog 1                                                           &mo 3 &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
         &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                            &screenshot3 0 0 &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
         &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp HOME &kp END &kp LGUI &kp DEL               &screenshot4 0 0 &kp H  &kp J  &f_mouse 4 K &kp L    &kp SEMI &kp SQT
-        &kp LSHFT &kp Z     &kp X    &kp C    &kp V      &kp B                            &kp LCTRL &kp PG_UP                         &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-        &mo 2     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_soft 0 0             &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo 2
+        &kp LSHFT &kp Z     &kp X    &c_cmd   &v_cmd     &kp B                            &kp LCTRL &kp PG_UP                         &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
+        &mo 2     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_cmd_check             &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo 2
       >;
     };
     keypad {
