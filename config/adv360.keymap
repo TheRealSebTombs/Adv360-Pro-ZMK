@@ -401,7 +401,7 @@
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &drag_release &trans &trans &trans &trans
-        &drag_abort &trans &trans &trans &trans &trans &trans           &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans &trans
+        &drag_abort &trans &trans &trans &trans &trans &trans           &trans &trans &trans &trans               &trans &trans &drag_release &trans &trans &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
       >;
