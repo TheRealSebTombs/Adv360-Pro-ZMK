@@ -24,6 +24,57 @@
       #include "macros.dtsi"
       #include "version.dtsi"
 
+      // Shift double-tap Caps Lock and mouse-layer controls.
+      caps_toggle: caps_toggle {
+          compatible = "zmk,behavior-macro";
+          label = "CAPS_TOGGLE";
+          #binding-cells = <0>;
+          tap-ms = <100>;
+          wait-ms = <0>;
+          bindings = <&kp CAPS>;
+      };
+
+      lshift_caps: lshift_caps {
+          compatible = "zmk,behavior-tap-dance";
+          label = "LSHIFT_CAPS";
+          #binding-cells = <0>;
+          tapping-term-ms = <200>;
+          bindings = <&kp LSHFT>, <&caps_toggle>;
+      };
+
+      rshift_caps: rshift_caps {
+          compatible = "zmk,behavior-tap-dance";
+          label = "RSHIFT_CAPS";
+          #binding-cells = <0>;
+          tapping-term-ms = <200>;
+          bindings = <&kp RSHFT>, <&caps_toggle>;
+      };
+
+      drag_on: drag_on {
+          compatible = "zmk,behavior-macro";
+          label = "DRAG_ON";
+          #binding-cells = <0>;
+          wait-ms = <0>;
+          bindings = <&macro_press &mkp MB1 &tog 6>;
+      };
+
+      drag_off: drag_off {
+          compatible = "zmk,behavior-macro";
+          label = "DRAG_OFF";
+          #binding-cells = <0>;
+          wait-ms = <0>;
+          bindings = <&macro_release &mkp MB1 &macro_press &tog 6>;
+      };
+
+      mouse_history: mouse_history {
+          compatible = "zmk,behavior-hold-tap";
+          label = "MOUSE_HISTORY";
+          #binding-cells = <2>;
+          tapping-term-ms = <150>;
+          flavor = "tap-preferred";
+          bindings = <&kp>, <&kp>;
+      };
+
       hm: homerow_mods {
           compatible = "zmk,behavior-hold-tap";
           label = "HOMEROW_MODS";
@@ -311,6 +362,15 @@
       };
     };
 
+  // Only expose drag-off on U while the mouse clutch is held.
+  conditional_layers {
+    compatible = "zmk,conditional-layers";
+    drag_mouse {
+      if-layers = <4 6>;
+      then-layer = <7>;
+    };
+  };
+
   keymap {
     compatible = "zmk,keymap";
 
@@ -320,7 +380,7 @@
         &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &tog 1                                                           &mo 3 &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
         &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                            &screenshot3 0 0 &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
         &kp ESC   &kp A     &kp S    &kp D    &kp F &kp G  &none           &kp HOME &kp END &kp LGUI &kp DEL               &screenshot4 0 0 &kp H  &kp J  &k_mouse 4 K     &kp L    &kp SEMI &kp SQT
-        &kp LSHFT &kp Z     &kp X    &c_cmd   &v_cmd     &kp B                            &kp LCTRL &kp PG_UP                         &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
+        &lshift_caps &kp Z     &kp X    &c_cmd   &v_cmd     &kp B                            &kp LCTRL &kp PG_UP                         &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &rshift_caps
         &mo 2     &kp GRAVE &none &kp LEFT &kp RIGHT                &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_cmd_check             &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo 2
       >;
     };
@@ -330,7 +390,7 @@
         &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &trans                                                           &mo 3 &kp N6 &kp KP_NUM &kp KP_EQUAL &kp KP_DIVIDE &kp KP_MULTIPLY &kp MINUS
         &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                            &none &kp Y  &kp KP_N7  &kp KP_N8    &kp KP_N9     &kp KP_MINUS    &kp BSLH
         &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &none &kp H  &kp KP_N4  &kp KP_N5    &kp KP_N6     &kp KP_PLUS     &kp SQT
-        &kp LSHFT &kp Z     &kp X    &kp C    &kp V      &kp B                            &kp HOME &kp PG_UP                           &kp N  &kp KP_N1  &kp KP_N2    &kp KP_N3     &kp KP_ENTER    &kp RSHFT
+        &lshift_caps &kp Z     &kp X    &kp C    &kp V      &kp B                            &kp HOME &kp PG_UP                           &kp N  &kp KP_N1  &kp KP_N2    &kp KP_N3     &kp KP_ENTER    &rshift_caps
         &mo 2     &kp GRAVE &none &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END  &kp PG_DN &kp ENTER &kp KP_N0              &kp UP     &kp DOWN     &kp KP_DOT    &kp RBKT        &mo 2
       >;
     };
@@ -358,7 +418,7 @@
       display-name = "Red";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &mmv MOVE(0,-1800) &trans &trans &trans                                      &trans &msc SCRL_UP &trans &none &trans &trans &trans
+        &trans &trans &trans &mmv MOVE(0,-1800) &trans &trans &trans                                      &trans &msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
         &trans &trans &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &trans &trans           &trans &trans &mouse_cmd &trans               &trans &msc SCRL_DOWN &k_click 0 0 &trans &o_click 0 0 &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &trans              &kp LEFT &kp DOWN &trans &trans &trans
@@ -373,6 +433,18 @@
         &trans &trans &trans &trans &trans &trans &trans           &trans &trans &trans &trans               &trans &msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
+      >;
+    };
+    drag_state {
+      display-name = "DragState";
+      bindings = <
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+      >;
+    };
+    drag_mouse {
+      display-name = "DragMouse";
+      bindings = <
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &drag_off &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
   };
