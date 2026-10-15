@@ -428,10 +428,5 @@
         &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
       >;
     };
-
-    extra4 {
-      display-name = "Yellow";
-      status = "reserved";
-    };
   };
 };
