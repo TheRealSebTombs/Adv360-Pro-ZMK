@@ -39,7 +39,7 @@
           label = "F_MOUSE";
           #binding-cells = <2>;
           tapping-term-ms = <175>;
-          flavor = "balanced";
+          flavor = "hold-preferred";
           bindings = <&mo>, <&kp>;
       };
 
@@ -100,7 +100,21 @@
           bindings = <&mmb_single>, <&rmb_single>;
       };
 
-      drag_start: drag_start {
+      drag_toggle_on: drag_toggle_on {
+          compatible = "zmk,behavior-macro";
+          label = "DRAG_TOGGLE_ON";
+          #binding-cells = <0>;
+          bindings = <&macro_press &mkp MB1>, <&macro_tap &tog 5>;
+      };
+
+      drag_toggle_off: drag_toggle_off {
+          compatible = "zmk,behavior-macro";
+          label = "DRAG_TOGGLE_OFF";
+          #binding-cells = <0>;
+          bindings = <&macro_release &mkp MB1>, <&macro_tap &tog 5>;
+      };
+
+      drag_clutch: drag_clutch {
           compatible = "zmk,behavior-macro";
           label = "DRAG_CLUTCH";
           #binding-cells = <0>;
@@ -109,6 +123,15 @@
           bindings = <&macro_press &mkp MB1 &mo 5>,
                      <&macro_pause_for_release>,
                      <&macro_release &mkp MB1 &mo 5>;
+      };
+
+      drag_dual: drag_dual {
+          compatible = "zmk,behavior-hold-tap";
+          label = "DRAG_DUAL";
+          #binding-cells = <2>;
+          tapping-term-ms = <175>;
+          flavor = "hold-preferred";
+          bindings = <&drag_clutch>, <&drag_toggle_on>;
       };
 
       drag_abort: drag_abort {
@@ -377,8 +400,8 @@
       display-name = "Red";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &mmv MOVE(0,-3600) &trans &trans &trans                           &trans &trans &drag_start &trans &trans &trans &trans
-        &trans &trans &mmv MOVE(-3600,0) &mmv MOVE(0,3600) &mmv MOVE(3600,0) &trans &trans     &trans &trans &k_click 0 0 &trans &o_click 0 0 &trans &trans
+        &trans &trans &trans &mmv MOVE(0,-3600) &trans &trans &trans                           &trans &msc SCRL_UP &drag_dual 0 0 &trans &trans &trans &trans
+        &trans &trans &mmv MOVE(-3600,0) &mmv MOVE(0,3600) &mmv MOVE(3600,0) &trans &trans     &trans &msc SCRL_DOWN &k_click 0 0 &trans &o_click 0 0 &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
       >;
@@ -388,7 +411,7 @@
       display-name = "DragClutch";
       bindings = <
         &none &none &none &none &none &none &trans                                      &trans &none &none &none &none &none &none
-        &trans &none &none &trans &none &none &trans                                     &trans &trans &trans &none &none &none &none
+        &trans &none &none &trans &none &none &trans                                     &trans &trans &drag_toggle_off &none &none &none &none
         &drag_abort &none &trans &trans &trans &none &trans           &trans &trans &trans &trans               &trans &trans &trans &trans &trans &none &none
         &trans &none &none &none &none &none                                             &trans &trans                    &none &none &none &none &none &trans
         &trans &none &none &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &none &none &trans
@@ -399,22 +422,16 @@
       display-name = "ArrowNav";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &trans &trans &trans &trans                                      &trans &msc SCRL_UP &trans &kp UP &trans &trans &trans
-        &trans &trans &trans &trans &mo 7 &trans &trans           &trans &trans &trans &trans               &trans &msc SCRL_DOWN &kp LEFT &kp DOWN &kp RIGHT &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &kp UP &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans           &trans &trans &trans &trans               &trans &trans &kp LEFT &kp DOWN &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
       >;
     };
 
     extra4 {
-      display-name = "HorizontalScroll";
-      bindings = <
-        &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &trans &trans &trans &trans                                      &trans &msc SCRL_LEFT &trans &trans &trans &trans &trans
-        &trans &trans &trans &trans &trans &trans &trans           &trans &trans &trans &trans               &trans &msc SCRL_RIGHT &trans &trans &trans &trans &trans
-        &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
-      >;
+      display-name = "Yellow";
+      status = "reserved";
     };
   };
 };
