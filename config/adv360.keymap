@@ -79,6 +79,15 @@
           bindings = <&mkp>, <&mkp>;
       };
 
+      o_nav: o_nav {
+          compatible = "zmk,behavior-hold-tap";
+          label = "O_NAV";
+          #binding-cells = <2>;
+          tapping-term-ms = <150>;
+          flavor = "tap-preferred";
+          bindings = <&kp>, <&kp>;
+      };
+
       drag_toggle_on: drag_toggle_on {
           compatible = "zmk,behavior-macro";
           label = "DRAG_TOGGLE_ON";
@@ -379,7 +388,7 @@
       display-name = "Mouse";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &mmv MOVE(0,-3600) &trans &trans &trans                           &trans &msc SCRL_UP &drag_dual 0 0 &trans &trans &trans &trans
+        &trans &trans &trans &mmv MOVE(0,-3600) &trans &trans &trans                           &trans &msc SCRL_UP &drag_dual 0 0 &trans &o_nav LG(RBKT) LG(LBKT) &trans &trans
         &trans &trans &mmv MOVE(-3600,0) &mmv MOVE(0,3600) &mmv MOVE(3600,0) &trans &trans     &trans &msc SCRL_DOWN &k_click 0 MB1 &trans &o_click MB3 MB2 &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
