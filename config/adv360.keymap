@@ -107,6 +107,14 @@
           bindings = <&mo>, <&kp>;
       };
 
+      arrows_cmd: arrows_cmd {
+          compatible = "zmk,behavior-macro";
+          label = "ARROWS_CMD";
+          #binding-cells = <0>;
+          wait-ms = <0>;
+          bindings = <&macro_press &kp LGUI &mo 10 &macro_pause_for_release &macro_release &mo 10 &kp LGUI>;
+      };
+
       hm: homerow_mods {
           compatible = "zmk,behavior-hold-tap";
           label = "HOMEROW_MODS";
@@ -488,7 +496,13 @@
     arrows {
       display-name = "Arrows";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &k_click 0 0 &kp UP &o_click 0 0 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &msc SCRL_UP &k_click 0 0 &kp UP &o_click 0 0 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &msc SCRL_DOWN &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
+      >;
+    };
+    arrows_cmd {
+      display-name = "ArrowsCmd";
+      bindings = <
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
   };
