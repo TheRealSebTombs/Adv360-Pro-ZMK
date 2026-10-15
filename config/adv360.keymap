@@ -358,8 +358,8 @@
       display-name = "Red";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &trans &trans &trans &trans                                      &trans &msc SCRL_UP &trans &mmv MOVE(0,-1800) &o_click 0 0 &trans &trans
-        &trans &trans &trans &trans &trans &trans &trans           &trans &trans &mouse_cmd &trans               &trans &msc SCRL_DOWN &k_click 0 0 &mmv MOVE(0,1800) &mmv MOVE(1800,0) &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans                                      &trans &msc SCRL_UP &trans &mmv MOVE(0,-1800) &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans           &trans &trans &mouse_cmd &trans               &trans &msc SCRL_DOWN &k_click 0 0 &mmv MOVE(0,1800) &o_click 0 0 &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &trans              &kp LEFT &kp DOWN &trans &trans &trans
       >;
