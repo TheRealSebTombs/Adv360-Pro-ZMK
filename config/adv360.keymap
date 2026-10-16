@@ -297,7 +297,7 @@
           #binding-cells = <2>;
           tapping-term-ms = <150>;
           flavor = "tap-preferred";
-          bindings = <&v_paste_in_place>, <&v_paste>;
+          bindings = <&v_paste>, <&v_paste_in_place>;
       };
 
       v_cmd: v_cmd {
