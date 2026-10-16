@@ -240,7 +240,7 @@
           compatible = "zmk,behavior-macro";
           label = "C_PASTE_LAUNCHER";
           #binding-cells = <0>;
-          bindings = <&kp LA(LS(C))>;
+          bindings = <&kp C &kp LA(LS(C))>;
       };
 
       c_copy: c_copy {
