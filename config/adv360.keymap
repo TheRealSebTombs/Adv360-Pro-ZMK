@@ -459,7 +459,7 @@
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &mmv MOVE(0,-1800) &trans &trans &trans                                      &trans &msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
-        &trans &trans &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &trans &trans           &trans &trans &mouse_cmd &trans               &trans &msc SCRL_DOWN &k_click 0 0 &trans &o_click 0 0 &trans &trans
+        &trans &trans &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &trans &trans           &trans &trans &mouse_cmd &trans               &trans &msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &trans              &kp LEFT &kp DOWN &trans &trans &trans
       >;
@@ -484,7 +484,7 @@
     drag_mouse {
       display-name = "DragMouse";
       bindings = <
-        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &mmv MOVE(0,-1800) &none &none &none &none &msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &none &none &none &none &mouse_cmd &none &none &msc SCRL_DOWN &drag_off &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &mouse_cmd &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
+        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &mmv MOVE(0,-1800) &none &none &none &none &msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &none &none &none &none &trans &none &none &msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
       >;
     };
     drag_mouse_cmd {
