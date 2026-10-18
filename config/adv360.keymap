@@ -363,6 +363,13 @@
           bindings = <&kp F18>;
       };
 
+      cmd_enter: cmd_enter {
+          compatible = "zmk,behavior-macro";
+          label = "CMD_ENTER";
+          #binding-cells = <0>;
+          bindings = <&kp LG(ENTER)>;
+      };
+
       cmd_opt_enter_tap: cmd_opt_enter_tap {
           compatible = "zmk,behavior-macro";
           label = "CMD_OPT_ENTER_TAP";
@@ -386,7 +393,7 @@
           compatible = "zmk,behavior-mod-morph";
           label = "ENTER_ALT_CHECK";
           #binding-cells = <0>;
-          bindings = <&kp ENTER>, <&seek_enter 0 0>;
+          bindings = <&cmd_enter>, <&seek_enter 0 0>;
           mods = <(MOD_LALT|MOD_RALT)>;
       };
 
