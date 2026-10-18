@@ -355,11 +355,12 @@
           bindings = <&hotkey2_paste_in_place>, <&hotkey2_paste>;
       };
 
-      seek_caps: seek_caps {
+
+      superkey_f18: superkey_f18 {
           compatible = "zmk,behavior-macro";
-          label = "SEEK_CAPS";
+          label = "SUPERKEY_F18";
           #binding-cells = <0>;
-          bindings = <&kp CAPS>;
+          bindings = <&kp F18>;
       };
 
       cmd_opt_enter_tap: cmd_opt_enter_tap {
@@ -375,37 +376,17 @@
           #binding-cells = <2>;
           tapping-term-ms = <150>;
           flavor = "tap-preferred";
-          bindings = <&seek_caps>, <&cmd_opt_enter_tap>;
+          bindings = <&superkey_f18>, <&cmd_opt_enter_tap>;
       };
 
-      gui_soft_enter: gui_soft_enter {
-          compatible = "zmk,behavior-macro";
-          label = "GUI_SOFT_ENTER";
-          #binding-cells = <0>;
-          bindings = <&kp LG(LS(ENTER))>;
-      };
 
-      gui_normal_enter: gui_normal_enter {
-          compatible = "zmk,behavior-macro";
-          label = "GUI_NORMAL_ENTER";
-          #binding-cells = <0>;
-          bindings = <&kp LG(ENTER)>;
-      };
 
-      gui_enter_soft: gui_enter_soft {
-          compatible = "zmk,behavior-hold-tap";
-          label = "GUI_ENTER_SOFT";
-          #binding-cells = <2>;
-          tapping-term-ms = <150>;
-          flavor = "tap-preferred";
-          bindings = <&gui_soft_enter>, <&gui_normal_enter>;
-      };
 
       enter_alt_check: enter_alt_check {
           compatible = "zmk,behavior-mod-morph";
           label = "ENTER_ALT_CHECK";
           #binding-cells = <0>;
-          bindings = <&gui_enter_soft 0 0>, <&seek_enter 0 0>;
+          bindings = <&kp ENTER>, <&seek_enter 0 0>;
           mods = <(MOD_LALT|MOD_RALT)>;
       };
 
@@ -413,7 +394,7 @@
           compatible = "zmk,behavior-mod-morph";
           label = "ENTER_CMD_CHECK";
           #binding-cells = <0>;
-          bindings = <&enter_soft 0 0>, <&enter_alt_check>;
+          bindings = <&kp ENTER>, <&enter_alt_check>;
           mods = <(MOD_LGUI|MOD_RGUI)>;
       };
 
@@ -433,28 +414,8 @@
           mods = <(MOD_LGUI|MOD_RGUI)>;
       };
 
-      soft_enter: soft_enter {
-          compatible = "zmk,behavior-macro";
-          label = "SOFT_ENTER";
-          #binding-cells = <0>;
-          bindings = <&kp LS(ENTER)>;
-      };
 
-      normal_enter: normal_enter {
-          compatible = "zmk,behavior-macro";
-          label = "NORMAL_ENTER";
-          #binding-cells = <0>;
-          bindings = <&kp ENTER>;
-      };
 
-      enter_soft: enter_soft {
-          compatible = "zmk,behavior-hold-tap";
-          label = "ENTER_SOFT";
-          #binding-cells = <2>;
-          tapping-term-ms = <150>;
-          flavor = "tap-preferred";
-          bindings = <&soft_enter>, <&normal_enter>;
-      };
     };
 
   // Only expose drag-off on U while the mouse clutch is held.
@@ -483,8 +444,8 @@
       display-name = "Keypad";
       bindings = <
         &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &trans                                                           &mo 3 &kp N6 &kp KP_NUM &kp KP_EQUAL &kp KP_DIVIDE &kp KP_MULTIPLY &kp MINUS
-        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &hotkey1_dual 0 0                                                            &none &kp Y  &kp KP_N7  &kp KP_N8    &kp KP_N9     &kp KP_MINUS    &kp BSLH
-        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &hotkey2_dual 0 0           &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &none &kp H  &kp KP_N4  &kp KP_N5    &kp KP_N6     &kp KP_PLUS     &kp SQT
+        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &hotkey1_dual 0 0                                                            &screenshot3 0 0&kp Y  &kp KP_N7  &kp KP_N8    &kp KP_N9     &kp KP_MINUS    &kp BSLH
+        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &hotkey2_dual 0 0           &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &screenshot4 0 0&kp H  &kp KP_N4  &kp KP_N5    &kp KP_N6     &kp KP_PLUS     &kp SQT
         &lshift_caps &kp Z     &kp X    &kp C    &kp V      &kp B                            &kp HOME &kp PG_UP                           &kp N  &kp KP_N1  &kp KP_N2    &kp KP_N3     &kp KP_ENTER    &rshift_caps
         &mo 2     &kp GRAVE &caps_mods &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END  &kp PG_DN &kp ENTER &kp KP_N0              &kp UP     &kp DOWN     &kp KP_DOT    &kp RBKT        &mo 2
       >;
@@ -493,8 +454,8 @@
       display-name = "Fn";
       bindings = <
         &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6 &tog 1                                           &mo 3 &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12
-        &trans &trans &trans &trans &trans &trans  &hotkey1_dual 0 0                                           &none &trans &trans &trans &trans  &trans  &trans
-        &trans &trans &trans &trans &trans &trans  &hotkey2_dual 0 0        &trans &trans &trans &trans        &none &trans &trans &trans &trans  &trans  &trans
+        &trans &trans &trans &trans &trans &trans  &hotkey1_dual 0 0                                           &screenshot3 0 0&trans &trans &trans &trans  &trans  &trans
+        &trans &trans &trans &trans &trans &trans  &hotkey2_dual 0 0        &trans &trans &trans &trans        &screenshot4 0 0&trans &trans &trans &trans  &trans  &trans
         &trans &trans &trans &trans &trans &trans                      &trans &trans                     &trans &trans &trans &trans  &trans &trans
         &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans              &fn_up_cmd &fn_down_cmd &trans  &trans  &trans
       >;
@@ -513,8 +474,8 @@
       display-name = "Red";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &mmv MOVE(0,-1800) &trans &trans &hotkey1_dual 0 0                                      &trans &msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
-        &trans &trans &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &trans &hotkey2_dual 0 0           &trans &trans &mouse_cmd &trans               &trans &msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &trans &trans
+        &trans &trans &trans &mmv MOVE(0,-1800) &trans &trans &hotkey1_dual 0 0                                      &screenshot3 0 0&msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
+        &trans &trans &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &trans &hotkey2_dual 0 0           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &trans              &kp LEFT &kp DOWN &trans &trans &trans
       >;
@@ -524,8 +485,8 @@
       display-name = "MouseCmd";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0                                      &trans &msc SCRL_LEFT &trans &trans &trans &trans &trans
-        &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0           &trans &trans &trans &trans               &trans &msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0                                      &screenshot3 0 0&msc SCRL_LEFT &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0           &trans &trans &trans &trans               &screenshot4 0 0&msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
       >;
@@ -533,31 +494,31 @@
     drag_state {
       display-name = "DragState";
       bindings = <
-        &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &hotkey1_dual 0 0 &none &none &none &none &none &none &none &drag_cancel &none &none &none &none &none &hotkey2_dual 0 0 &none &none &kp LGUI &none &none &none &none &drag_clutch 4 0 &none &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &none &none &none &kp RSHFT &none &none &none &none &none &none &kp LGUI &kp LALT &none &none &none &none &none &none &none &none
+        &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &hotkey1_dual 0 0 &screenshot3 0 0&none &none &none &none &none &none &drag_cancel &none &none &none &none &none &hotkey2_dual 0 0 &none &none &kp LGUI &none &screenshot4 0 0&none &none &drag_clutch 4 0 &none &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &none &none &none &kp RSHFT &none &none &none &none &none &none &kp LGUI &kp LALT &none &none &none &none &none &none &none &none
       >;
     };
     drag_mouse {
       display-name = "DragMouse";
       bindings = <
-        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &mmv MOVE(0,-1800) &none &none &hotkey1_dual 0 0 &none &msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &none &hotkey2_dual 0 0 &none &none &trans &none &none &msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
+        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &mmv MOVE(0,-1800) &none &none &hotkey1_dual 0 0 &screenshot3 0 0&msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &none &hotkey2_dual 0 0 &none &none &trans &none &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
       >;
     };
     drag_mouse_cmd {
       display-name = "DragMouseCmd";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &trans &msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &trans &trans &trans &trans &trans &msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &screenshot3 0 0&msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &trans &trans &trans &trans &screenshot4 0 0&msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
     arrows {
       display-name = "Arrows";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &trans &msc SCRL_UP &trans &kp UP &mouse_history LG(RBKT) LG(LBKT)&trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &trans &trans &arrows_cmd &trans &trans &msc SCRL_DOWN &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &screenshot3 0 0&msc SCRL_UP &trans &kp UP &mouse_history LG(RBKT) LG(LBKT)&trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &trans &trans &arrows_cmd &trans &screenshot4 0 0&msc SCRL_DOWN &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
     arrows_cmd {
       display-name = "ArrowsCmd";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &trans &msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &trans &trans &trans &trans &trans &msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &screenshot3 0 0&msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &trans &trans &trans &trans &screenshot4 0 0&msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
   };

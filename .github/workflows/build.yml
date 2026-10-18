@@ -14,9 +14,8 @@ jobs:
       - name: Get version data
         id: get_info
         run: |
-          build_date=$(date +"%Y-%m-%d")
           commit=$(echo "${{ github.sha }}" | cut -c1-7)
-          file_prefix=$build_date-firmware-$commit
+          file_prefix=firmware-$commit
           branch_name=$(echo "${{ github.ref }}" | awk -F'/' '{print $3}' | cut -c1-4)
           echo "file_prefix=$file_prefix" >> $GITHUB_OUTPUT
           echo "commit=$commit" >> $GITHUB_OUTPUT
