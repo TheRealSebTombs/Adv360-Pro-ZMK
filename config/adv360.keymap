@@ -329,21 +329,7 @@
           #binding-cells = <2>;
           tapping-term-ms = <150>;
           flavor = "tap-preferred";
-          bindings = <&hotkey1_copy>, <&hotkey1_cut>;
-      };
-
-      hotkey2_paste: hotkey2_paste {
-          compatible = "zmk,behavior-macro";
-          label = "HOTKEY2_PASTE";
-          #binding-cells = <0>;
-          bindings = <&kp LG(V)>;
-      };
-
-      hotkey2_paste_in_place: hotkey2_paste_in_place {
-          compatible = "zmk,behavior-macro";
-          label = "HOTKEY2_PASTE_IN_PLACE";
-          #binding-cells = <0>;
-          bindings = <&kp LG(LA(LS(V)))>;
+          bindings = <&hotkey1_cut>, <&hotkey1_copy>;
       };
 
       hotkey2_dual: hotkey2_dual {
@@ -352,7 +338,7 @@
           #binding-cells = <2>;
           tapping-term-ms = <150>;
           flavor = "tap-preferred";
-          bindings = <&hotkey2_paste>, <&hotkey2_paste_in_place>;
+          bindings = <&kp LG(V)>, <&kp LG(LA(LS(V)))>;
       };
 
       seek_caps: seek_caps {
