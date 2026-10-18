@@ -352,7 +352,7 @@
           #binding-cells = <2>;
           tapping-term-ms = <150>;
           flavor = "tap-preferred";
-          bindings = <&hotkey2_paste>, <&hotkey2_paste_in_place>;
+          bindings = <&hotkey2_paste_in_place>, <&hotkey2_paste>;
       };
 
       seek_caps: seek_caps {
