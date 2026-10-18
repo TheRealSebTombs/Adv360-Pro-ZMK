@@ -476,7 +476,7 @@
     default_layer {
       display-name = "Base";
       bindings = <
-        &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &tog 1 &mo 3 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp TAB &kp Q &kp W &kp E &kp R &kp T &hotkey1_dual 0 0 &screenshot3 0 0 &kp Y &kp U &kp I &kp O &kp P &kp BSLH &kp ESC &kp A &kp S &d_arrows 9 D &kp F &kp G &none &kp HOME &kp END &hotkey2_dual 0 0 &kp DEL &screenshot4 0 0 &kp H &kp J &k_mouse 4 K &kp L &kp SEMI &kp SQT &lshift_caps &kp Z &kp X &c_cmd &v_cmd &kp B &kp LCTRL &kp PG_UP &kp N &kp M &kp COMMA &kp DOT &kp FSLH &rshift_caps &mo 2 &kp GRAVE &caps_mods &kp LEFT &kp RIGHT &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_cmd_check &kp UP &kp DOWN &kp LBKT &kp RBKT &mo 2
+        &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &tog 1 &mo 3 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp TAB &kp Q &kp W &kp E &kp R &kp T &hotkey1_dual 0 0 &screenshot3 0 0 &kp Y &kp U &kp I &kp O &kp P &kp BSLH &kp ESC &kp A &kp S &d_arrows 9 D &kp F &kp G &hotkey2_dual 0 0 &kp HOME &kp END &kp LGUI &kp DEL &screenshot4 0 0 &kp H &kp J &k_mouse 4 K &kp L &kp SEMI &kp SQT &lshift_caps &kp Z &kp X &c_cmd &v_cmd &kp B &kp LCTRL &kp PG_UP &kp N &kp M &kp COMMA &kp DOT &kp FSLH &rshift_caps &mo 2 &kp GRAVE &caps_mods &kp LEFT &kp RIGHT &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_cmd_check &kp UP &kp DOWN &kp LBKT &kp RBKT &mo 2
       >;
     };
     keypad {
@@ -484,7 +484,7 @@
       bindings = <
         &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &trans                                                           &mo 3 &kp N6 &kp KP_NUM &kp KP_EQUAL &kp KP_DIVIDE &kp KP_MULTIPLY &kp MINUS
         &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &hotkey1_dual 0 0                                                            &none &kp Y  &kp KP_N7  &kp KP_N8    &kp KP_N9     &kp KP_MINUS    &kp BSLH
-        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp LCTRL &kp LALT &hotkey2_dual 0 0  &kp RCTRL           &none &kp H  &kp KP_N4  &kp KP_N5    &kp KP_N6     &kp KP_PLUS     &kp SQT
+        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &hotkey2_dual 0 0           &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &none &kp H  &kp KP_N4  &kp KP_N5    &kp KP_N6     &kp KP_PLUS     &kp SQT
         &lshift_caps &kp Z     &kp X    &kp C    &kp V      &kp B                            &kp HOME &kp PG_UP                           &kp N  &kp KP_N1  &kp KP_N2    &kp KP_N3     &kp KP_ENTER    &rshift_caps
         &mo 2     &kp GRAVE &caps_mods &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END  &kp PG_DN &kp ENTER &kp KP_N0              &kp UP     &kp DOWN     &kp KP_DOT    &kp RBKT        &mo 2
       >;
@@ -494,7 +494,7 @@
       bindings = <
         &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6 &tog 1                                           &mo 3 &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12
         &trans &trans &trans &trans &trans &trans  &hotkey1_dual 0 0                                           &none &trans &trans &trans &trans  &trans  &trans
-        &trans &trans &trans &trans &trans &trans  &none        &trans &trans &hotkey2_dual 0 0 &trans        &none &trans &trans &trans &trans  &trans  &trans
+        &trans &trans &trans &trans &trans &trans  &hotkey2_dual 0 0        &trans &trans &trans &trans        &none &trans &trans &trans &trans  &trans  &trans
         &trans &trans &trans &trans &trans &trans                      &trans &trans                     &trans &trans &trans &trans  &trans &trans
         &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans              &fn_up_cmd &fn_down_cmd &trans  &trans  &trans
       >;
@@ -504,7 +504,7 @@
       bindings = <
         &none &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &none                                                                     &trans                 &none        &none        &none        &none &none &none
         &none &none        &none        &none        &none        &none        &bootloader                                                               &bootloader            &none        &none        &none        &none &none &none
-        &studio_unlock &none        &none        &none        &none        &none        &none                   &none &none &bt BT_CLR &none                      &stp STP_BAT &none        &none        &none        &none &none &none
+        &studio_unlock &none        &none        &none        &none        &none        &hotkey2_dual 0 0                   &none &none &bt BT_CLR &none                      &stp STP_BAT &none        &none        &none        &none &none &none
         &none &none        &none        &none        &macro_ver   &none                                      &none &none                                                        &none        &none        &none        &none &none &none
         &none &none        &none        &none        &none                                       &none &none &none &none      &bl BL_TOG &rgb_ug RGB_TOG                                     &bl BL_INC   &bl BL_DEC   &none &none &none
       >;
@@ -514,7 +514,7 @@
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &mmv MOVE(0,-1800) &trans &trans &hotkey1_dual 0 0                                      &trans &msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
-        &trans &trans &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &trans &trans           &trans &trans &hotkey2_dual 0 0 &trans               &trans &msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &trans &trans
+        &trans &trans &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &trans &hotkey2_dual 0 0           &trans &trans &mouse_cmd &trans               &trans &msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &trans              &kp LEFT &kp DOWN &trans &trans &trans
       >;
@@ -525,7 +525,7 @@
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0                                      &trans &msc SCRL_LEFT &trans &trans &trans &trans &trans
-        &trans &trans &trans &trans &trans &trans &trans           &trans &trans &hotkey2_dual 0 0 &trans               &trans &msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0           &trans &trans &trans &trans               &trans &msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
       >;
@@ -533,31 +533,31 @@
     drag_state {
       display-name = "DragState";
       bindings = <
-        &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &hotkey1_dual 0 0 &none &none &none &none &none &none &none &drag_cancel &none &none &none &none &none &none &none &none &hotkey2_dual 0 0 &none &none &none &none &drag_clutch 4 0 &none &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &none &none &none &kp RSHFT &none &none &none &none &none &none &kp LGUI &kp LALT &none &none &none &none &none &none &none &none
+        &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &hotkey1_dual 0 0 &none &none &none &none &none &none &none &drag_cancel &none &none &none &none &none &hotkey2_dual 0 0 &none &none &kp LGUI &none &none &none &none &drag_clutch 4 0 &none &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &none &none &none &kp RSHFT &none &none &none &none &none &none &kp LGUI &kp LALT &none &none &none &none &none &none &none &none
       >;
     };
     drag_mouse {
       display-name = "DragMouse";
       bindings = <
-        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &mmv MOVE(0,-1800) &none &none &hotkey1_dual 0 0 &none &msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &none &none &none &none &hotkey2_dual 0 0 &none &none &msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
+        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &mmv MOVE(0,-1800) &none &none &hotkey1_dual 0 0 &none &msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &mmv MOVE(-1800,0) &mmv MOVE(0,1800) &mmv MOVE(1800,0) &none &hotkey2_dual 0 0 &none &none &trans &none &none &msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
       >;
     };
     drag_mouse_cmd {
       display-name = "DragMouseCmd";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &trans &msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &trans &trans &msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &trans &msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &trans &trans &trans &trans &trans &msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
     arrows {
       display-name = "Arrows";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &trans &msc SCRL_UP &trans &kp UP &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &trans &trans &msc SCRL_DOWN &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &trans &msc SCRL_UP &trans &kp UP &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &trans &trans &arrows_cmd &trans &trans &msc SCRL_DOWN &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
     arrows_cmd {
       display-name = "ArrowsCmd";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &trans &msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &trans &trans &msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &trans &msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &trans &trans &trans &trans &trans &msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
   };
