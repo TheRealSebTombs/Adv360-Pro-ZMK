@@ -1,0 +1,25 @@
+description: Staged mouse movement with instant nudge, crawl, ramp and brake
+compatible: "adv360,behavior-staged-mouse"
+include: zero_param.yaml
+properties:
+  x-speed:
+    type: int
+    required: true
+  y-speed:
+    type: int
+    required: true
+  crawl-speed:
+    type: int
+    default: 90
+  crawl-ms:
+    type: int
+    default: 180
+  ramp-ms:
+    type: int
+    default: 120
+  brake-ms:
+    type: int
+    default: 25
+  nudge-px:
+    type: int
+    default: 3
