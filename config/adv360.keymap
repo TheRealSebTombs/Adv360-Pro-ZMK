@@ -93,7 +93,7 @@
           x-speed = <0>;
           y-speed = <(-4500)>;
           nudge-px = <5>;
-          crawl-speed = <450>;
+          crawl-speed = <60>;
           crawl-ms = <250>;
           ramp-ms = <220>;
           brake-ms = <0>;
@@ -104,7 +104,7 @@
           x-speed = <0>;
           y-speed = <4500>;
           nudge-px = <5>;
-          crawl-speed = <450>;
+          crawl-speed = <60>;
           crawl-ms = <250>;
           ramp-ms = <220>;
           brake-ms = <0>;
@@ -115,7 +115,7 @@
           x-speed = <(-4500)>;
           y-speed = <0>;
           nudge-px = <5>;
-          crawl-speed = <450>;
+          crawl-speed = <60>;
           crawl-ms = <250>;
           ramp-ms = <220>;
           brake-ms = <0>;
@@ -126,7 +126,7 @@
           x-speed = <4500>;
           y-speed = <0>;
           nudge-px = <5>;
-          crawl-speed = <450>;
+          crawl-speed = <60>;
           crawl-ms = <250>;
           ramp-ms = <220>;
           brake-ms = <0>;
