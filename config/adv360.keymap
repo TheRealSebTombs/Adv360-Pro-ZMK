@@ -91,25 +91,45 @@
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
           x-speed = <0>;
-          y-speed = <(-3000)>;
+          y-speed = <(-5000)>;
+          nudge-px = <10>;
+          crawl-speed = <450>;
+          crawl-ms = <35>;
+          ramp-ms = <85>;
+          brake-ms = <0>;
       };
       stage_down: stage_down {
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
           x-speed = <0>;
-          y-speed = <3000>;
+          y-speed = <5000>;
+          nudge-px = <10>;
+          crawl-speed = <450>;
+          crawl-ms = <35>;
+          ramp-ms = <85>;
+          brake-ms = <0>;
       };
       stage_left: stage_left {
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
-          x-speed = <(-3000)>;
+          x-speed = <(-5000)>;
           y-speed = <0>;
+          nudge-px = <10>;
+          crawl-speed = <450>;
+          crawl-ms = <35>;
+          ramp-ms = <85>;
+          brake-ms = <0>;
       };
       stage_right: stage_right {
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
-          x-speed = <3000>;
+          x-speed = <5000>;
           y-speed = <0>;
+          nudge-px = <10>;
+          crawl-speed = <450>;
+          crawl-ms = <35>;
+          ramp-ms = <85>;
+          brake-ms = <0>;
       };
       // Mouse-layer taps send a fixed short pulse; holds keep continuous movement.
       nudge_up_tap: nudge_up_tap {
@@ -461,7 +481,7 @@
           label = "ENTER_DUAL";
           #binding-cells = <2>;
           tapping-term-ms = <150>;
-          flavor = "tap-preferred";
+          flavor = "hold-preferred";
           bindings = <&kp>, <&kp>;
       };
 
