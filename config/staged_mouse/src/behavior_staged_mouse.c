@@ -1,8 +1,8 @@
 /*
  * SPDX-License-Identifier: MIT
  *
- * Precision movement: 5 pixels on press, then 5-pixel steps on a held key
- * before a smooth acceleration to cruising speed. Braking is optional.
+ * Immediate one-pixel nudge, followed by continuous, smoothly accelerating
+ * movement. Fractional pixels accumulate across updates. Braking is optional.
  */
 #define DT_DRV_COMPAT adv360_behavior_staged_mouse
 
@@ -20,7 +20,6 @@
 #if DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT)
 
 #define UPDATE_MS 4
-#define PRECISION_REPEAT_MS 90
 #define BRAKE_SPEED_CAP 200
 
 struct staged_config {
@@ -40,7 +39,6 @@ struct staged_data {
     int64_t release_ms;
     int32_t remainder;
     int64_t last_tick_ms;
-    uint16_t precision_steps;
     int32_t brake_speed;
     bool down;
     bool braking;
@@ -62,19 +60,16 @@ static void send_delta(const struct device *dev, int32_t pixels) {
 
 static int32_t staged_speed(const struct staged_config *cfg, int64_t held_ms) {
     int32_t max = abs_speed(cfg->x_speed ? cfg->x_speed : cfg->y_speed);
-    // Held precision steps are handled by staged_tick before the ramp.
-    if (held_ms < cfg->crawl_ms) {
-        return 0;
-    }
-    int64_t t = held_ms - cfg->crawl_ms;
-    if (cfg->ramp_ms == 0 || t >= cfg->ramp_ms) {
+    int32_t min = MIN((int32_t)cfg->crawl_speed, max);
+    // Use one continuous S-shaped ramp, with no separate step-repeat phase.
+    int64_t ramp = (int64_t)cfg->crawl_ms + cfg->ramp_ms;
+    if (ramp == 0 || held_ms >= ramp) {
         return max;
     }
-    // Smoothstep acceleration avoids a sudden jump in speed at either end.
-    int64_t ramp = cfg->ramp_ms;
+    int64_t t = MAX(held_ms, 0);
     int64_t blend = t * t * (3 * ramp - 2 * t);
-    return cfg->crawl_speed + (int32_t)(((int64_t)(max - cfg->crawl_speed) * blend) /
-                                         (ramp * ramp * ramp));
+    return min + (int32_t)(((int64_t)(max - min) * blend) /
+                           (ramp * ramp * ramp));
 }
 
 static void staged_tick(struct k_work *work) {
@@ -88,15 +83,6 @@ static void staged_tick(struct k_work *work) {
     // Bound catch-up movement if the scheduler was delayed.
     elapsed_ms = CLAMP(elapsed_ms, 0, 32);
 
-    if (data->down && now - data->start_ms < cfg->crawl_ms) {
-        uint16_t steps_due = (uint16_t)((now - data->start_ms) / PRECISION_REPEAT_MS);
-        while (data->precision_steps <= steps_due) {
-            send_delta(data->dev, cfg->nudge_px);
-            data->precision_steps++;
-        }
-        k_work_reschedule(&data->tick, K_MSEC(UPDATE_MS));
-        return;
-    }
 
     if (data->down) {
         speed = staged_speed(cfg, now - data->start_ms);
@@ -142,7 +128,6 @@ static int staged_pressed(struct zmk_behavior_binding *binding,
     data->braking = false;
     data->start_ms = k_uptime_get();
     data->last_tick_ms = data->start_ms;
-    data->precision_steps = 1;
     data->remainder = 0;
     send_delta(dev, cfg->nudge_px);
     k_work_reschedule(&data->tick, K_MSEC(UPDATE_MS));
