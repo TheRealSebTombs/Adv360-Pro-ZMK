@@ -91,7 +91,7 @@
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
           x-speed = <0>;
-          y-speed = <-3000>;
+          y-speed = <(-3000)>;
       };
       stage_down: stage_down {
           compatible = "adv360,behavior-staged-mouse";
@@ -102,7 +102,7 @@
       stage_left: stage_left {
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
-          x-speed = <-3000>;
+          x-speed = <(-3000)>;
           y-speed = <0>;
       };
       stage_right: stage_right {
