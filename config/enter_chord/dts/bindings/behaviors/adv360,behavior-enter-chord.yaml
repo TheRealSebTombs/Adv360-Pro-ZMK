@@ -1,7 +1,0 @@
-description: Advantage360 Command+Option+Enter tap/hold
-compatible: "adv360,behavior-enter-chord"
-include: zero_param.yaml
-properties:
-  tapping-term-ms:
-    type: int
-    required: true
