@@ -60,8 +60,10 @@ static void send_delta(const struct device *dev, int32_t pixels) {
 
 static int32_t staged_speed(const struct staged_config *cfg, int64_t held_ms) {
     int32_t max = abs_speed(cfg->x_speed ? cfg->x_speed : cfg->y_speed);
+    // The initial 10-pixel press is the whole tap; continuous motion
+    // begins only once the short tap window has elapsed.
     if (held_ms < cfg->crawl_ms) {
-        return cfg->crawl_speed;
+        return 0;
     }
     int64_t t = held_ms - cfg->crawl_ms;
     if (cfg->ramp_ms == 0 || t >= cfg->ramp_ms) {
