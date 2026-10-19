@@ -85,6 +85,32 @@
       };
 
 
+
+      // Experimental: 3 px on press, immediate crawl, then ramp; capped braking.
+      stage_up: stage_up {
+          compatible = "adv360,behavior-staged-mouse";
+          #binding-cells = <0>;
+          x-speed = <0>;
+          y-speed = <-3000>;
+      };
+      stage_down: stage_down {
+          compatible = "adv360,behavior-staged-mouse";
+          #binding-cells = <0>;
+          x-speed = <0>;
+          y-speed = <3000>;
+      };
+      stage_left: stage_left {
+          compatible = "adv360,behavior-staged-mouse";
+          #binding-cells = <0>;
+          x-speed = <-3000>;
+          y-speed = <0>;
+      };
+      stage_right: stage_right {
+          compatible = "adv360,behavior-staged-mouse";
+          #binding-cells = <0>;
+          x-speed = <3000>;
+          y-speed = <0>;
+      };
       // Mouse-layer taps send a fixed short pulse; holds keep continuous movement.
       nudge_up_tap: nudge_up_tap {
           compatible = "zmk,behavior-macro";
@@ -472,6 +498,24 @@
     };
   };
 
+  // Route generated staged movement through ZMK's pointer input pipeline.
+  stage_up_listener: stage_up_listener {
+      compatible = "zmk,input-listener";
+      device = <&stage_up>;
+  };
+  stage_down_listener: stage_down_listener {
+      compatible = "zmk,input-listener";
+      device = <&stage_down>;
+  };
+  stage_left_listener: stage_left_listener {
+      compatible = "zmk,input-listener";
+      device = <&stage_left>;
+  };
+  stage_right_listener: stage_right_listener {
+      compatible = "zmk,input-listener";
+      device = <&stage_right>;
+  };
+
   keymap {
     compatible = "zmk,keymap";
 
@@ -515,8 +559,8 @@
       display-name = "Red";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &nudge_up MOVE(0,-3000) 0 &trans &trans &hotkey2_dual 0 0                                      &screenshot3 0 0&msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
-        &trans &trans &nudge_left MOVE(-3000,0) 0 &nudge_down MOVE(0,3000) 0 &nudge_right MOVE(3000,0) 0 &trans &hotkey1_dual 0 0           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &trans &trans
+        &trans &trans &trans &stage_up &trans &trans &hotkey2_dual 0 0                                      &screenshot3 0 0&msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
+        &trans &trans &stage_left &stage_down &stage_right &trans &hotkey1_dual 0 0           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &trans              &kp LEFT &kp DOWN &trans &trans &trans
       >;
@@ -541,7 +585,7 @@
     drag_mouse {
       display-name = "DragMouse";
       bindings = <
-        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &nudge_up MOVE(0,-3000) 0 &none &none &hotkey2_dual 0 0 &screenshot3 0 0&msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &nudge_left MOVE(-3000,0) 0 &nudge_down MOVE(0,3000) 0 &nudge_right MOVE(3000,0) 0 &none &hotkey1_dual 0 0 &none &none &trans &none &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
+        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &stage_up &none &none &hotkey2_dual 0 0 &screenshot3 0 0&msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &stage_left &stage_down &stage_right &none &hotkey1_dual 0 0 &none &none &trans &none &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
       >;
     };
     drag_mouse_cmd {
