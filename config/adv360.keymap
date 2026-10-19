@@ -86,7 +86,7 @@
 
 
 
-      // Experimental: 5 px on press, 85 ms tap window, 110 ms ramp; braking disabled.
+      // Experimental: 5 px steps during 250 ms precision phase, then 220 ms smooth ramp; braking disabled.
       stage_up: stage_up {
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
@@ -94,8 +94,8 @@
           y-speed = <(-4500)>;
           nudge-px = <5>;
           crawl-speed = <450>;
-          crawl-ms = <85>;
-          ramp-ms = <110>;
+          crawl-ms = <250>;
+          ramp-ms = <220>;
           brake-ms = <0>;
       };
       stage_down: stage_down {
@@ -105,8 +105,8 @@
           y-speed = <4500>;
           nudge-px = <5>;
           crawl-speed = <450>;
-          crawl-ms = <85>;
-          ramp-ms = <110>;
+          crawl-ms = <250>;
+          ramp-ms = <220>;
           brake-ms = <0>;
       };
       stage_left: stage_left {
@@ -116,8 +116,8 @@
           y-speed = <0>;
           nudge-px = <5>;
           crawl-speed = <450>;
-          crawl-ms = <85>;
-          ramp-ms = <110>;
+          crawl-ms = <250>;
+          ramp-ms = <220>;
           brake-ms = <0>;
       };
       stage_right: stage_right {
@@ -127,8 +127,8 @@
           y-speed = <0>;
           nudge-px = <5>;
           crawl-speed = <450>;
-          crawl-ms = <85>;
-          ramp-ms = <110>;
+          crawl-ms = <250>;
+          ramp-ms = <220>;
           brake-ms = <0>;
       };
       // Mouse-layer taps send a fixed short pulse; holds keep continuous movement.
