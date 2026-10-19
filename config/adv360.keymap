@@ -125,37 +125,37 @@
       nudge_up: nudge_up {
           compatible = "zmk,behavior-hold-tap";
           label = "NUDGE_UP";
-          #binding-cells = <0>;
+          #binding-cells = <2>;
           tapping-term-ms = <200>;
           flavor = "tap-preferred";
-          bindings = <&nudge_up_tap &mmv MOVE(0,-1800)>;
+          bindings = <&mmv MOVE(0,-1800)>, <&nudge_up_tap>;
       };
 
       nudge_down: nudge_down {
           compatible = "zmk,behavior-hold-tap";
           label = "NUDGE_DOWN";
-          #binding-cells = <0>;
+          #binding-cells = <2>;
           tapping-term-ms = <200>;
           flavor = "tap-preferred";
-          bindings = <&nudge_down_tap &mmv MOVE(0,1800)>;
+          bindings = <&mmv MOVE(0,1800)>, <&nudge_down_tap>;
       };
 
       nudge_left: nudge_left {
           compatible = "zmk,behavior-hold-tap";
           label = "NUDGE_LEFT";
-          #binding-cells = <0>;
+          #binding-cells = <2>;
           tapping-term-ms = <200>;
           flavor = "tap-preferred";
-          bindings = <&nudge_left_tap &mmv MOVE(-1800,0)>;
+          bindings = <&mmv MOVE(-1800,0)>, <&nudge_left_tap>;
       };
 
       nudge_right: nudge_right {
           compatible = "zmk,behavior-hold-tap";
           label = "NUDGE_RIGHT";
-          #binding-cells = <0>;
+          #binding-cells = <2>;
           tapping-term-ms = <200>;
           flavor = "tap-preferred";
-          bindings = <&nudge_right_tap &mmv MOVE(1800,0)>;
+          bindings = <&mmv MOVE(1800,0)>, <&nudge_right_tap>;
       };
 
       // K can re-enter the mouse layer during drag lock without typing a K.
@@ -554,8 +554,8 @@
       display-name = "Red";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &nudge_up &trans &trans &hotkey1_dual 0 0                                      &screenshot3 0 0&msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
-        &trans &trans &nudge_left &nudge_down &nudge_right &trans &hotkey2_dual 0 0           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &trans &trans
+        &trans &trans &trans &nudge_up 0 0 &trans &trans &hotkey1_dual 0 0                                      &screenshot3 0 0&msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
+        &trans &trans &nudge_left 0 0 &nudge_down 0 0 &nudge_right 0 0 &trans &hotkey2_dual 0 0           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &trans              &kp LEFT &kp DOWN &trans &trans &trans
       >;
@@ -580,7 +580,7 @@
     drag_mouse {
       display-name = "DragMouse";
       bindings = <
-        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &nudge_up &none &none &hotkey1_dual 0 0 &screenshot3 0 0&msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &nudge_left &nudge_down &nudge_right &none &hotkey2_dual 0 0 &none &none &trans &none &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
+        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &nudge_up 0 0 &none &none &hotkey1_dual 0 0 &screenshot3 0 0&msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &nudge_left 0 0 &nudge_down 0 0 &nudge_right 0 0 &none &hotkey2_dual 0 0 &none &none &trans &none &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
       >;
     };
     drag_mouse_cmd {
