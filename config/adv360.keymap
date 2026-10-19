@@ -86,49 +86,49 @@
 
 
 
-      // Experimental: 3 px on press, immediate crawl, then ramp; capped braking.
+      // Experimental: 5 px on press, 85 ms tap window, 110 ms ramp; braking disabled.
       stage_up: stage_up {
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
           x-speed = <0>;
-          y-speed = <(-5000)>;
-          nudge-px = <10>;
+          y-speed = <(-4500)>;
+          nudge-px = <5>;
           crawl-speed = <450>;
-          crawl-ms = <35>;
-          ramp-ms = <85>;
+          crawl-ms = <85>;
+          ramp-ms = <110>;
           brake-ms = <0>;
       };
       stage_down: stage_down {
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
           x-speed = <0>;
-          y-speed = <5000>;
-          nudge-px = <10>;
+          y-speed = <4500>;
+          nudge-px = <5>;
           crawl-speed = <450>;
-          crawl-ms = <35>;
-          ramp-ms = <85>;
+          crawl-ms = <85>;
+          ramp-ms = <110>;
           brake-ms = <0>;
       };
       stage_left: stage_left {
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
-          x-speed = <(-5000)>;
+          x-speed = <(-4500)>;
           y-speed = <0>;
-          nudge-px = <10>;
+          nudge-px = <5>;
           crawl-speed = <450>;
-          crawl-ms = <35>;
-          ramp-ms = <85>;
+          crawl-ms = <85>;
+          ramp-ms = <110>;
           brake-ms = <0>;
       };
       stage_right: stage_right {
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
-          x-speed = <5000>;
+          x-speed = <4500>;
           y-speed = <0>;
-          nudge-px = <10>;
+          nudge-px = <5>;
           crawl-speed = <450>;
-          crawl-ms = <35>;
-          ramp-ms = <85>;
+          crawl-ms = <85>;
+          ramp-ms = <110>;
           brake-ms = <0>;
       };
       // Mouse-layer taps send a fixed short pulse; holds keep continuous movement.
