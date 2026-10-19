@@ -429,13 +429,6 @@
       };
 
 
-      // Single behavior preserves modifier state without nested mod-morph masks.
-      enter_chord: enter_chord {
-          compatible = "adv360,behavior-enter-chord";
-          #binding-cells = <0>;
-          tapping-term-ms = <150>;
-      };
-
       fn_up_cmd: fn_up_cmd {
           compatible = "zmk,behavior-mod-morph";
           label = "FN_UP_CMD";
@@ -475,7 +468,7 @@
     default_layer {
       display-name = "Base";
       bindings = <
-        &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &tog 1 &mo 3 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp TAB &kp Q &kp W &kp E &kp R &kp T &hotkey2_dual 0 0 &screenshot3 0 0 &kp Y &kp U &kp I &kp O &kp P &kp BSLH &kp ESC &kp A &kp S &d_arrows 9 D &kp F &kp G &hotkey1_dual 0 0 &kp HOME &kp END &kp LGUI &kp DEL &screenshot4 0 0 &kp H &kp J &k_mouse 4 K &kp L &kp SEMI &kp SQT &lshift_caps &kp Z &kp X &c_cmd &v_cmd &kp B &kp LCTRL &kp PG_UP &kp N &kp M &kp COMMA &kp DOT &kp FSLH &rshift_caps &mo 2 &kp GRAVE &caps_mods &kp LEFT &kp RIGHT &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_chord &kp UP &kp DOWN &kp LBKT &kp RBKT &mo 2
+        &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &tog 1 &mo 3 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp TAB &kp Q &kp W &kp E &kp R &kp T &hotkey2_dual 0 0 &screenshot3 0 0 &kp Y &kp U &kp I &kp O &kp P &kp BSLH &kp ESC &kp A &kp S &d_arrows 9 D &kp F &kp G &hotkey1_dual 0 0 &kp HOME &kp END &kp LGUI &kp DEL &screenshot4 0 0 &kp H &kp J &k_mouse 4 K &kp L &kp SEMI &kp SQT &lshift_caps &kp Z &kp X &c_cmd &v_cmd &kp B &kp LCTRL &kp PG_UP &kp N &kp M &kp COMMA &kp DOT &kp FSLH &rshift_caps &mo 2 &kp GRAVE &caps_mods &kp LEFT &kp RIGHT &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &kp ENTER &kp UP &kp DOWN &kp LBKT &kp RBKT &mo 2
       >;
     };
     keypad {
