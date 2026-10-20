@@ -131,6 +131,25 @@
           ramp-ms = <220>;
           brake-ms = <0>;
       };
+      // Enter held while K activates the mouse layer: fixed-speed precision.
+      stage_precision: stage_precision {
+          compatible = "adv360,behavior-staged-mouse";
+          #binding-cells = <0>;
+          x-speed = <0>;
+          y-speed = <0>;
+          nudge-px = <0>;
+          brake-ms = <0>;
+      };
+
+      precision_enter: precision_enter {
+          compatible = "zmk,behavior-hold-tap";
+          label = "PRECISION_ENTER";
+          #binding-cells = <2>;
+          tapping-term-ms = <150>;
+          flavor = "balanced";
+          bindings = <&stage_precision>, <&kp>;
+      };
+
       // Mouse-layer taps send a fixed short pulse; holds keep continuous movement.
       nudge_up_tap: nudge_up_tap {
           compatible = "zmk,behavior-macro";
@@ -579,7 +598,7 @@
         &trans &trans &trans &stage_up &trans &trans &hotkey2_dual 0 0                                      &screenshot3 0 0&msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
         &trans &trans &stage_left &stage_down &stage_right &trans &hotkey1_dual 0 0           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
-        &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &trans              &kp LEFT &kp DOWN &trans &trans &trans
+        &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &precision_enter 0 ENTER              &kp LEFT &kp DOWN &trans &trans &trans
       >;
     };
 
