@@ -146,6 +146,27 @@ static int staged_pressed(struct zmk_behavior_binding *binding,
     data->start_ms = k_uptime_get();
     data->last_tick_ms = data->start_ms;
     data->remainder = 0;
+
+    // When adding a perpendicular direction, align its acceleration clock
+    // and fractional-pixel phase to the already-held axis. Otherwise two
+    // slightly staggered keypresses alternate X and Y movement counts.
+    // Keep the one-pixel press nudge for each key unchanged.
+    for (size_t i = 0; i < ARRAY_SIZE(all_states); i++) {
+        struct staged_data *other = all_states[i];
+        if (!other || other == data || !other->down) {
+            continue;
+        }
+        const struct staged_config *other_cfg = other->dev->config;
+        bool this_is_x = cfg->x_speed != 0;
+        bool other_is_x = other_cfg->x_speed != 0;
+        if (this_is_x != other_is_x) {
+            data->start_ms = other->start_ms;
+            data->last_tick_ms = other->last_tick_ms;
+            data->remainder = other->remainder;
+            break;
+        }
+    }
+
     send_delta(dev, cfg->nudge_px);
     k_work_reschedule(&shared_tick, K_MSEC(UPDATE_MS));
     return 0;
