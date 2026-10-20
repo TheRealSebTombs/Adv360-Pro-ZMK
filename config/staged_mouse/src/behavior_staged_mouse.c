@@ -46,6 +46,8 @@ struct staged_data {
 static struct staged_data *all_states[DT_NUM_INST_STATUS_OKAY(DT_DRV_COMPAT)];
 static struct k_work_delayable shared_tick;
 static bool shared_tick_ready;
+static bool precision_held;
+#define PRECISION_PX_PER_SECOND 1200
 
 static int32_t abs_speed(int32_t speed) { return speed < 0 ? -speed : speed; }
 static int32_t sign_speed(int32_t speed) { return (speed > 0) - (speed < 0); }
@@ -60,6 +62,10 @@ static void send_delta(const struct device *dev, int32_t pixels) {
 }
 
 static int32_t staged_speed(const struct staged_config *cfg, int64_t held_ms) {
+    // Precision is constant-speed; it does not restart the normal ramp.
+    if (precision_held) {
+        return PRECISION_PX_PER_SECOND;
+    }
     int32_t max = abs_speed(cfg->x_speed ? cfg->x_speed : cfg->y_speed);
     int32_t min = MIN((int32_t)cfg->crawl_speed, max);
     // Use one continuous S-shaped ramp, with no separate step-repeat phase.
@@ -98,6 +104,9 @@ static void staged_tick(struct k_work *work) {
             continue;
         }
         const struct staged_config *cfg = data->dev->config;
+        if (cfg->x_speed == 0 && cfg->y_speed == 0) {
+            continue; // precision clutch does not generate mouse movement
+        }
         int64_t elapsed_ms = CLAMP(now - data->last_tick_ms, 0, 32);
         data->last_tick_ms = now;
         int32_t speed;
@@ -150,6 +159,13 @@ static int staged_pressed(struct zmk_behavior_binding *binding,
         return -EBUSY;
     }
 
+    // A zero-axis instance is the momentary precision clutch.
+    if (cfg->x_speed == 0 && cfg->y_speed == 0) {
+        data->down = true;
+        precision_held = true;
+        return 0;
+    }
+
     for (size_t i = 0; i < ARRAY_SIZE(all_states); i++) {
         struct staged_data *state = all_states[i];
         if (state && state->braking) {
@@ -197,6 +213,11 @@ static int staged_released(struct zmk_behavior_binding *binding,
 
     if (!data->down) {
         return -EINVAL;
+    }
+    if (cfg->x_speed == 0 && cfg->y_speed == 0) {
+        data->down = false;
+        precision_held = false;
+        return 0;
     }
     int64_t now = k_uptime_get();
     int64_t held_ms = now - data->start_ms;
