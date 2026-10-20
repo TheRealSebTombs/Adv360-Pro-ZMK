@@ -228,7 +228,7 @@
           compatible = "zmk,behavior-hold-tap";
           label = "DRAG_CLUTCH";
           #binding-cells = <2>;
-          tapping-term-ms = <175>;
+          tapping-term-ms = <150>;
           flavor = "balanced";
           bindings = <&mo>, <&none>;
       };
@@ -249,7 +249,7 @@
           compatible = "zmk,behavior-hold-tap";
           label = "D_ARROWS";
           #binding-cells = <2>;
-          tapping-term-ms = <175>;
+          tapping-term-ms = <150>;
           flavor = "balanced";
           bindings = <&mo>, <&kp>;
       };
@@ -266,7 +266,7 @@
           compatible = "zmk,behavior-hold-tap";
           label = "HOMEROW_MODS";
           #binding-cells = <2>;
-          tapping-term-ms = <200>;
+          tapping-term-ms = <150>;
           quick_tap_ms = <175>;
           flavor = "tap-preferred";
           bindings = <&kp>, <&kp>;
@@ -276,7 +276,7 @@
           compatible = "zmk,behavior-hold-tap";
           label = "K_MOUSE";
           #binding-cells = <2>;
-          tapping-term-ms = <175>;
+          tapping-term-ms = <150>;
           flavor = "balanced";
           bindings = <&mo>, <&kp>;
       };
@@ -383,113 +383,80 @@
           bindings = <&screenshot_portion_file>, <&screenshot_portion_clip>;
       };
 
-      // Plain C: tap types C; hold copies, then opens Paste's shortcut.
-      // Cmd+C remains a normal key combination, without tap/hold behaviour.
-      c_hold_launcher: c_hold_launcher {
+      clipboard_cut: clipboard_cut {
           compatible = "zmk,behavior-macro";
-          label = "C_HOLD_LAUNCHER";
-          #binding-cells = <0>;
-          tap-ms = <30>;
-          wait-ms = <60>;
-          bindings = <&kp LG(C) &kp LG(LA(LS(C)))>;
-      };
-
-      c_dual: c_dual {
-          compatible = "zmk,behavior-hold-tap";
-          label = "C_DUAL";
-          #binding-cells = <2>;
-          tapping-term-ms = <150>;
-          flavor = "tap-preferred";
-          bindings = <&c_hold_launcher>, <&kp>;
-      };
-
-      c_key: c_key {
-          compatible = "zmk,behavior-mod-morph";
-          label = "C_KEY";
-          #binding-cells = <0>;
-          bindings = <&c_dual 0 C>, <&kp C>;
-          mods = <(MOD_LGUI|MOD_RGUI)>;
-          keep-mods = <(MOD_LGUI|MOD_RGUI)>;
-      };
-
-      v_paste_in_place: v_paste_in_place {
-          compatible = "zmk,behavior-macro";
-          label = "V_PASTE_IN_PLACE";
-          #binding-cells = <0>;
-          bindings = <&kp LA(LS(V))>;
-      };
-
-      v_paste: v_paste {
-          compatible = "zmk,behavior-macro";
-          label = "V_PASTE";
-          #binding-cells = <0>;
-          bindings = <&kp V>;
-      };
-
-      v_cmd_dual: v_cmd_dual {
-          compatible = "zmk,behavior-hold-tap";
-          label = "V_CMD_DUAL";
-          #binding-cells = <2>;
-          tapping-term-ms = <150>;
-          flavor = "tap-preferred";
-          bindings = <&v_paste_in_place>, <&v_paste>;
-      };
-
-      v_cmd: v_cmd {
-          compatible = "zmk,behavior-mod-morph";
-          label = "V_CMD";
-          #binding-cells = <0>;
-          bindings = <&kp V>, <&v_cmd_dual 0 0>;
-          mods = <(MOD_LGUI|MOD_RGUI)>;
-          keep-mods = <(MOD_LGUI|MOD_RGUI)>;
-      };
-
-      hotkey1_copy: hotkey1_copy {
-          compatible = "zmk,behavior-macro";
-          label = "HOTKEY1_COPY";
-          #binding-cells = <0>;
-          bindings = <&kp LG(C)>;
-      };
-
-      hotkey1_cut: hotkey1_cut {
-          compatible = "zmk,behavior-macro";
-          label = "HOTKEY1_CUT";
+          label = "CLIPBOARD_CUT";
           #binding-cells = <0>;
           bindings = <&kp LG(X)>;
       };
 
-      hotkey1_dual: hotkey1_dual {
-          compatible = "zmk,behavior-hold-tap";
-          label = "HOTKEY1_DUAL";
-          #binding-cells = <2>;
-          tapping-term-ms = <150>;
-          flavor = "tap-preferred";
-          bindings = <&hotkey1_cut>, <&hotkey1_copy>;
+      clipboard_copy: clipboard_copy {
+          compatible = "zmk,behavior-macro";
+          label = "CLIPBOARD_COPY";
+          #binding-cells = <0>;
+          bindings = <&kp LG(C)>;
       };
 
-      hotkey2_paste: hotkey2_paste {
+      clipboard_paste: clipboard_paste {
           compatible = "zmk,behavior-macro";
-          label = "HOTKEY2_PASTE";
+          label = "CLIPBOARD_PASTE";
           #binding-cells = <0>;
           bindings = <&kp LG(V)>;
       };
 
-      hotkey2_paste_in_place: hotkey2_paste_in_place {
-          compatible = "zmk,behavior-macro";
-          label = "HOTKEY2_PASTE_IN_PLACE";
-          #binding-cells = <0>;
-          bindings = <&kp LG(LA(LS(V)))>;
-      };
-
-      hotkey2_dual: hotkey2_dual {
+      clipboard_a: clipboard_a {
           compatible = "zmk,behavior-hold-tap";
-          label = "HOTKEY2_DUAL";
+          label = "CLIPBOARD_A";
           #binding-cells = <2>;
           tapping-term-ms = <150>;
           flavor = "tap-preferred";
-          bindings = <&hotkey2_paste_in_place>, <&hotkey2_paste>;
+          bindings = <&clipboard_cut>, <&kp>;
       };
 
+      clipboard_s: clipboard_s {
+          compatible = "zmk,behavior-hold-tap";
+          label = "CLIPBOARD_S";
+          #binding-cells = <2>;
+          tapping-term-ms = <150>;
+          flavor = "tap-preferred";
+          bindings = <&clipboard_copy>, <&kp>;
+      };
+
+      clipboard_f: clipboard_f {
+          compatible = "zmk,behavior-hold-tap";
+          label = "CLIPBOARD_F";
+          #binding-cells = <2>;
+          tapping-term-ms = <150>;
+          flavor = "tap-preferred";
+          bindings = <&clipboard_paste>, <&kp>;
+      };
+
+      clipboard_a_key: clipboard_a_key {
+          compatible = "zmk,behavior-mod-morph";
+          label = "CLIPBOARD_A_KEY";
+          #binding-cells = <0>;
+          bindings = <&clipboard_a 0 A>, <&kp A>;
+          mods = <(MOD_LGUI|MOD_RGUI)>;
+          keep-mods = <(MOD_LGUI|MOD_RGUI)>;
+      };
+
+      clipboard_s_key: clipboard_s_key {
+          compatible = "zmk,behavior-mod-morph";
+          label = "CLIPBOARD_S_KEY";
+          #binding-cells = <0>;
+          bindings = <&clipboard_s 0 S>, <&kp S>;
+          mods = <(MOD_LGUI|MOD_RGUI)>;
+          keep-mods = <(MOD_LGUI|MOD_RGUI)>;
+      };
+
+      clipboard_f_key: clipboard_f_key {
+          compatible = "zmk,behavior-mod-morph";
+          label = "CLIPBOARD_F_KEY";
+          #binding-cells = <0>;
+          bindings = <&clipboard_f 0 F>, <&kp F>;
+          mods = <(MOD_LGUI|MOD_RGUI)>;
+          keep-mods = <(MOD_LGUI|MOD_RGUI)>;
+      };
 
       // Physical Enter: hold for Shift+Enter, tap for Enter.
       enter_dual: enter_dual {
@@ -558,16 +525,16 @@
     default_layer {
       display-name = "Base";
       bindings = <
-        &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &tog 1 &mo 3 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp TAB &kp Q &kp W &kp E &kp R &kp T &hotkey2_dual 0 0 &screenshot3 0 0 &kp Y &kp U &kp I &kp O &kp P &kp BSLH &kp ESC &kp A &kp S &d_arrows 9 D &kp F &kp G &hotkey1_dual 0 0 &kp HOME &kp END &kp LGUI &kp DEL &screenshot4 0 0 &kp H &kp J &k_mouse 4 K &kp L &kp SEMI &kp SQT &lshift_caps &kp Z &kp X &c_key &v_cmd &kp B &kp LCTRL &kp PG_UP &kp N &kp M &kp COMMA &kp DOT &kp FSLH &rshift_caps &mo 2 &kp GRAVE &caps_mods &kp LEFT &kp RIGHT &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_dual LS(ENTER) ENTER &kp UP &kp DOWN &kp LBKT &kp RBKT &mo 2
+        &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &tog 1 &mo 3 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp TAB &kp Q &kp W &kp E &kp R &kp T &none &screenshot3 0 0 &kp Y &kp U &kp I &kp O &kp P &kp BSLH &kp ESC &clipboard_a_key &clipboard_s_key &d_arrows 9 D &clipboard_f_key &kp G &none &kp HOME &kp END &kp LGUI &kp DEL &screenshot4 0 0 &kp H &kp J &k_mouse 4 K &kp L &kp SEMI &kp SQT &lshift_caps &kp Z &kp X &kp C &kp V &kp B &kp LCTRL &kp PG_UP &kp N &kp M &kp COMMA &kp DOT &kp FSLH &rshift_caps &mo 2 &kp GRAVE &caps_mods &kp LEFT &kp RIGHT &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_dual LS(ENTER) ENTER &kp UP &kp DOWN &kp LBKT &kp RBKT &mo 2
       >;
     };
     keypad {
       display-name = "Keypad";
       bindings = <
         &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &trans                                                           &mo 3 &kp N6 &kp KP_NUM &kp KP_EQUAL &kp KP_DIVIDE &kp KP_MULTIPLY &kp MINUS
-        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &hotkey2_dual 0 0                                                            &screenshot3 0 0&kp Y  &kp KP_N7  &kp KP_N8    &kp KP_N9     &kp KP_MINUS    &kp BSLH
-        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &hotkey1_dual 0 0           &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &screenshot4 0 0&kp H  &kp KP_N4  &kp KP_N5    &kp KP_N6     &kp KP_PLUS     &kp SQT
-        &lshift_caps &kp Z     &kp X    &c_key    &kp V      &kp B                            &kp HOME &kp PG_UP                           &kp N  &kp KP_N1  &kp KP_N2    &kp KP_N3     &kp KP_ENTER    &rshift_caps
+        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                            &screenshot3 0 0&kp Y  &kp KP_N7  &kp KP_N8    &kp KP_N9     &kp KP_MINUS    &kp BSLH
+        &kp ESC   &clipboard_a_key &clipboard_s_key &kp D &clipboard_f_key &kp G  &bootloader           &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &screenshot4 0 0&kp H  &kp KP_N4  &kp KP_N5    &kp KP_N6     &kp KP_PLUS     &kp SQT
+        &lshift_caps &kp Z     &kp X    &kp C    &kp V      &kp B                            &kp HOME &kp PG_UP                           &kp N  &kp KP_N1  &kp KP_N2    &kp KP_N3     &kp KP_ENTER    &rshift_caps
         &mo 2     &kp GRAVE &caps_mods &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END  &kp PG_DN &enter_dual LS(ENTER) ENTER &kp KP_N0              &kp UP     &kp DOWN     &kp KP_DOT    &kp RBKT        &mo 2
       >;
     };
@@ -575,8 +542,8 @@
       display-name = "Fn";
       bindings = <
         &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6 &tog 1                                           &mo 3 &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12
-        &trans &trans &trans &trans &trans &trans  &hotkey2_dual 0 0                                           &screenshot3 0 0&trans &trans &trans &trans  &trans  &trans
-        &trans &trans &trans &trans &trans &trans  &hotkey1_dual 0 0        &trans &trans &trans &trans        &screenshot4 0 0&trans &trans &trans &trans  &trans  &trans
+        &trans &trans &trans &trans &trans &trans  &none                                           &screenshot3 0 0&trans &trans &trans &trans  &trans  &trans
+        &trans &trans &trans &trans &trans &trans  &none        &trans &trans &trans &trans        &screenshot4 0 0&trans &trans &trans &trans  &trans  &trans
         &trans &trans &trans &trans &trans &trans                      &trans &trans                     &trans &trans &trans &trans  &trans &trans
         &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans              &fn_up_cmd &fn_down_cmd &trans  &trans  &trans
       >;
@@ -585,7 +552,7 @@
       display-name = "Mod";
       bindings = <
         &none &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &none                                                                     &trans                 &none        &none        &none        &none &none &none
-        &none &none        &none        &none        &none        &none        &bootloader                                                               &bootloader            &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none        &none        &none                                                               &bootloader            &none        &none        &none        &none &none &none
         &studio_unlock &none        &none        &none        &none        &none        &none                   &none &none &bt BT_CLR &none                      &stp STP_BAT &none        &none        &none        &none &none &none
         &none &none        &none        &none        &macro_ver   &none                                      &none &none                                                        &none        &none        &none        &none &none &none
         &none &none        &none        &none        &none                                       &none &none &none &none      &bl BL_TOG &rgb_ug RGB_TOG                                     &bl BL_INC   &bl BL_DEC   &none &none &none
@@ -595,8 +562,8 @@
       display-name = "Red";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &stage_up &trans &trans &hotkey2_dual 0 0                                      &screenshot3 0 0&msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
-        &trans &trans &stage_left &stage_down &stage_right &trans &hotkey1_dual 0 0           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &trans &trans
+        &trans &trans &trans &stage_up &trans &trans &none                                      &screenshot3 0 0&msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
+        &trans &kp A &stage_left &stage_down &stage_right &trans &none           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &tog 4 &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &precision_enter 0 ENTER              &kp LEFT &kp DOWN &trans &trans &trans
       >;
@@ -606,8 +573,8 @@
       display-name = "MouseCmd";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0                                      &screenshot3 0 0&msc SCRL_LEFT &trans &trans &trans &trans &trans
-        &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0           &trans &trans &trans &trans               &screenshot4 0 0&msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &none                                      &screenshot3 0 0&msc SCRL_LEFT &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &none           &trans &trans &trans &trans               &screenshot4 0 0&msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans              &trans &trans &trans &trans &trans
       >;
@@ -615,31 +582,31 @@
     drag_state {
       display-name = "DragState";
       bindings = <
-        &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &hotkey2_dual 0 0 &screenshot3 0 0&none &none &none &none &none &none &drag_cancel &none &none &none &none &none &hotkey1_dual 0 0 &none &none &kp LGUI &none &screenshot4 0 0&none &none &drag_clutch 4 0 &none &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &none &none &none &kp RSHFT &none &none &none &none &none &none &kp LGUI &kp LALT &none &none &none &none &none &none &none &none
+        &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &none &screenshot3 0 0&none &none &none &none &none &none &drag_cancel &none &none &none &none &none &none &none &none &kp LGUI &none &screenshot4 0 0&none &none &drag_clutch 4 0 &none &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &none &none &none &kp RSHFT &none &none &none &none &none &none &kp LGUI &kp LALT &none &none &none &none &none &none &none &none
       >;
     };
     drag_mouse {
       display-name = "DragMouse";
       bindings = <
-        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &stage_up &none &none &hotkey2_dual 0 0 &screenshot3 0 0&msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &stage_left &stage_down &stage_right &none &hotkey1_dual 0 0 &none &none &trans &none &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
+        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &stage_up &none &none &none &screenshot3 0 0&msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &stage_left &stage_down &stage_right &none &none &none &none &trans &none &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
       >;
     };
     drag_mouse_cmd {
       display-name = "DragMouseCmd";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &screenshot3 0 0&msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &trans &trans &trans &trans &screenshot4 0 0&msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &none &screenshot3 0 0&msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &trans &trans &screenshot4 0 0&msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
     arrows {
       display-name = "Arrows";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &screenshot3 0 0&msc SCRL_UP &trans &kp UP &mouse_history LG(RBKT) LG(LBKT)&trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &trans &trans &arrows_cmd &trans &screenshot4 0 0&msc SCRL_DOWN &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp A &kp S &trans &kp F &trans &none &screenshot3 0 0&msc SCRL_UP &trans &kp UP &mouse_history LG(RBKT) LG(LBKT)&trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &arrows_cmd &trans &screenshot4 0 0&msc SCRL_DOWN &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
     arrows_cmd {
       display-name = "ArrowsCmd";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey2_dual 0 0 &screenshot3 0 0&msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &hotkey1_dual 0 0 &trans &trans &trans &trans &screenshot4 0 0&msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &none &screenshot3 0 0&msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &trans &trans &screenshot4 0 0&msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
   };
