@@ -77,7 +77,19 @@ static void staged_tick(struct k_work *work) {
     int64_t now = k_uptime_get();
     int32_t dx = 0, dy = 0;
     bool active = false;
+    bool held_x = false, held_y = false;
     ARG_UNUSED(work);
+
+    // Identify simultaneous X/Y movement before calculating individual deltas.
+    for (size_t i = 0; i < ARRAY_SIZE(all_states); i++) {
+        struct staged_data *state = all_states[i];
+        if (!state || !state->down) {
+            continue;
+        }
+        const struct staged_config *direction = state->dev->config;
+        held_x |= direction->x_speed != 0;
+        held_y |= direction->y_speed != 0;
+    }
 
     // Compute all held directions on one clock and coalesce the axes.
     for (size_t i = 0; i < ARRAY_SIZE(all_states); i++) {
@@ -102,6 +114,11 @@ static void staged_tick(struct k_work *work) {
                               (cfg->brake_ms - elapsed) / cfg->brake_ms);
         }
         active = true;
+        // Scale each component by 1/sqrt(2), preserving total diagonal speed.
+        // Apply before fractional accumulation to avoid alternating large steps.
+        if (held_x && held_y) {
+            speed = (int32_t)(((int64_t)speed * 707107 + 500000) / 1000000);
+        }
         data->remainder += speed * (int32_t)elapsed_ms;
         int32_t pixels = data->remainder / 1000;
         data->remainder -= pixels * 1000;
