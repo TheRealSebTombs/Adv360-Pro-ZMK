@@ -86,12 +86,12 @@
 
 
 
-      // Experimental Rev4: 1 px immediate nudge, continuous smooth ramp from 50 to 4500 px/s over 470 ms; braking disabled.
+      // Experimental Rev4: 1 px immediate nudge, continuous smooth ramp from 50 to 5000 px/s over 470 ms; braking disabled.
       stage_up: stage_up {
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
           x-speed = <0>;
-          y-speed = <(-4500)>;
+          y-speed = <(-5000)>;
           nudge-px = <1>;
           crawl-speed = <50>;
           crawl-ms = <250>;
@@ -102,7 +102,7 @@
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
           x-speed = <0>;
-          y-speed = <4500>;
+          y-speed = <5000>;
           nudge-px = <1>;
           crawl-speed = <50>;
           crawl-ms = <250>;
@@ -112,7 +112,7 @@
       stage_left: stage_left {
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
-          x-speed = <(-4500)>;
+          x-speed = <(-5000)>;
           y-speed = <0>;
           nudge-px = <1>;
           crawl-speed = <50>;
@@ -123,7 +123,7 @@
       stage_right: stage_right {
           compatible = "adv360,behavior-staged-mouse";
           #binding-cells = <0>;
-          x-speed = <4500>;
+          x-speed = <5000>;
           y-speed = <0>;
           nudge-px = <1>;
           crawl-speed = <50>;
