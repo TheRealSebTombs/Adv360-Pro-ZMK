@@ -47,7 +47,7 @@ static struct staged_data *all_states[DT_NUM_INST_STATUS_OKAY(DT_DRV_COMPAT)];
 static struct k_work_delayable shared_tick;
 static bool shared_tick_ready;
 static bool precision_held;
-#define PRECISION_PX_PER_SECOND 600
+#define PRECISION_PX_PER_SECOND 200
 
 static int32_t abs_speed(int32_t speed) { return speed < 0 ? -speed : speed; }
 static int32_t sign_speed(int32_t speed) { return (speed > 0) - (speed < 0); }
