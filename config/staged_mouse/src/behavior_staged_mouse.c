@@ -2,7 +2,7 @@
  * SPDX-License-Identifier: MIT
  *
  * Immediate one-pixel nudge, followed by continuous, smoothly accelerating
- * movement. Fractional pixels accumulate across updates. Braking is optional.
+ * movement. A shared timer combines X/Y into synchronised reports.
  */
 #define DT_DRV_COMPAT adv360_behavior_staged_mouse
 
@@ -33,7 +33,6 @@ struct staged_config {
 };
 
 struct staged_data {
-    struct k_work_delayable tick;
     const struct device *dev;
     int64_t start_ms;
     int64_t release_ms;
@@ -45,6 +44,8 @@ struct staged_data {
 };
 
 static struct staged_data *all_states[DT_NUM_INST_STATUS_OKAY(DT_DRV_COMPAT)];
+static struct k_work_delayable shared_tick;
+static bool shared_tick_ready;
 
 static int32_t abs_speed(int32_t speed) { return speed < 0 ? -speed : speed; }
 static int32_t sign_speed(int32_t speed) { return (speed > 0) - (speed < 0); }
@@ -73,36 +74,54 @@ static int32_t staged_speed(const struct staged_config *cfg, int64_t held_ms) {
 }
 
 static void staged_tick(struct k_work *work) {
-    struct staged_data *data =
-        CONTAINER_OF(k_work_delayable_from_work(work), struct staged_data, tick);
-    const struct staged_config *cfg = data->dev->config;
     int64_t now = k_uptime_get();
-    int32_t speed;
-    int64_t elapsed_ms = now - data->last_tick_ms;
-    data->last_tick_ms = now;
-    // Bound catch-up movement if the scheduler was delayed.
-    elapsed_ms = CLAMP(elapsed_ms, 0, 32);
+    int32_t dx = 0, dy = 0;
+    bool active = false;
+    ARG_UNUSED(work);
 
-
-    if (data->down) {
-        speed = staged_speed(cfg, now - data->start_ms);
-    } else if (data->braking) {
-        int64_t elapsed = now - data->release_ms;
-        if (elapsed >= cfg->brake_ms || cfg->brake_ms == 0) {
-            data->braking = false;
-            data->remainder = 0;
-            return;
+    // Compute all held directions on one clock and coalesce the axes.
+    for (size_t i = 0; i < ARRAY_SIZE(all_states); i++) {
+        struct staged_data *data = all_states[i];
+        if (!data || (!data->down && !data->braking)) {
+            continue;
         }
-        speed = (int32_t)(data->brake_speed * (cfg->brake_ms - elapsed) / cfg->brake_ms);
-    } else {
-        return;
+        const struct staged_config *cfg = data->dev->config;
+        int64_t elapsed_ms = CLAMP(now - data->last_tick_ms, 0, 32);
+        data->last_tick_ms = now;
+        int32_t speed;
+        if (data->down) {
+            speed = staged_speed(cfg, now - data->start_ms);
+        } else {
+            int64_t elapsed = now - data->release_ms;
+            if (cfg->brake_ms == 0 || elapsed >= cfg->brake_ms) {
+                data->braking = false;
+                data->remainder = 0;
+                continue;
+            }
+            speed = (int32_t)((int64_t)data->brake_speed *
+                              (cfg->brake_ms - elapsed) / cfg->brake_ms);
+        }
+        active = true;
+        data->remainder += speed * (int32_t)elapsed_ms;
+        int32_t pixels = data->remainder / 1000;
+        data->remainder -= pixels * 1000;
+        dx += pixels * sign_speed(cfg->x_speed);
+        dy += pixels * sign_speed(cfg->y_speed);
     }
 
-    data->remainder += speed * (int32_t)elapsed_ms;
-    int32_t pixels = data->remainder / 1000;
-    data->remainder -= pixels * 1000;
-    send_delta(data->dev, pixels);
-    k_work_reschedule(&data->tick, K_MSEC(UPDATE_MS));
+    // Use one listener/device and one report frame for both axes.
+    if (all_states[0] && (dx || dy)) {
+        const struct device *report_dev = all_states[0]->dev;
+        if (dx) {
+            input_report_rel(report_dev, INPUT_REL_X, dx, dy == 0, K_NO_WAIT);
+        }
+        if (dy) {
+            input_report_rel(report_dev, INPUT_REL_Y, dy, true, K_NO_WAIT);
+        }
+    }
+    if (active) {
+        k_work_reschedule(&shared_tick, K_MSEC(UPDATE_MS));
+    }
 }
 
 static int staged_pressed(struct zmk_behavior_binding *binding,
@@ -119,18 +138,16 @@ static int staged_pressed(struct zmk_behavior_binding *binding,
         if (state && state->braking) {
             state->braking = false;
             state->remainder = 0;
-            k_work_cancel_delayable(&state->tick);
         }
     }
 
-    k_work_cancel_delayable(&data->tick);
     data->down = true;
     data->braking = false;
     data->start_ms = k_uptime_get();
     data->last_tick_ms = data->start_ms;
     data->remainder = 0;
     send_delta(dev, cfg->nudge_px);
-    k_work_reschedule(&data->tick, K_MSEC(UPDATE_MS));
+    k_work_reschedule(&shared_tick, K_MSEC(UPDATE_MS));
     return 0;
 }
 
@@ -147,14 +164,12 @@ static int staged_released(struct zmk_behavior_binding *binding,
     int64_t held_ms = now - data->start_ms;
     data->down = false;
     data->remainder = 0;
-    k_work_cancel_delayable(&data->tick);
-
     /* Never add inertia to a precision tap or slow/accelerating movement. */
     if (cfg->brake_ms && held_ms >= cfg->crawl_ms + cfg->ramp_ms) {
         data->braking = true;
         data->release_ms = now;
         data->brake_speed = MIN(staged_speed(cfg, held_ms) / 4, BRAKE_SPEED_CAP);
-        k_work_reschedule(&data->tick, K_MSEC(UPDATE_MS));
+        k_work_reschedule(&shared_tick, K_MSEC(UPDATE_MS));
     }
     return 0;
 }
@@ -170,7 +185,10 @@ static const struct behavior_driver_api staged_api = {
 static int staged_init(const struct device *dev) {
     struct staged_data *data = dev->data;
     data->dev = dev;
-    k_work_init_delayable(&data->tick, staged_tick);
+    if (!shared_tick_ready) {
+        k_work_init_delayable(&shared_tick, staged_tick);
+        shared_tick_ready = true;
+    }
     return 0;
 }
 
