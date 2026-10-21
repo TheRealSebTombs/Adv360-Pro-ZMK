@@ -230,7 +230,7 @@
           #binding-cells = <2>;
           tapping-term-ms = <150>;
           flavor = "balanced";
-          bindings = <&mo>, <&none>;
+          bindings = <&mouse_hold>, <&none>;
       };
 
 
@@ -272,13 +272,26 @@
           bindings = <&kp>, <&kp>;
       };
 
+      // Coordinate momentary mouse activation with a persistent layer lock.
+      mouse_hold: mouse_hold {
+          compatible = "zmk,behavior-momentary-layer";
+          #binding-cells = <1>;
+          locking;
+      };
+
+      mouse_lock: mouse_lock {
+          compatible = "zmk,behavior-toggle-layer";
+          #binding-cells = <1>;
+          locking;
+      };
+
       k_mouse: k_mouse {
           compatible = "zmk,behavior-hold-tap";
           label = "K_MOUSE";
           #binding-cells = <2>;
           tapping-term-ms = <150>;
           flavor = "balanced";
-          bindings = <&mo>, <&kp>;
+          bindings = <&mouse_hold>, <&kp>;
       };
 
       lmb_single: lmb_single {
@@ -408,7 +421,7 @@
           compatible = "zmk,behavior-hold-tap";
           label = "CLIPBOARD_A";
           #binding-cells = <2>;
-          tapping-term-ms = <150>;
+          tapping-term-ms = <250>;
           flavor = "tap-preferred";
           bindings = <&clipboard_cut>, <&kp>;
       };
@@ -417,7 +430,7 @@
           compatible = "zmk,behavior-hold-tap";
           label = "CLIPBOARD_S";
           #binding-cells = <2>;
-          tapping-term-ms = <150>;
+          tapping-term-ms = <250>;
           flavor = "tap-preferred";
           bindings = <&clipboard_copy>, <&kp>;
       };
@@ -426,7 +439,7 @@
           compatible = "zmk,behavior-hold-tap";
           label = "CLIPBOARD_F";
           #binding-cells = <2>;
-          tapping-term-ms = <150>;
+          tapping-term-ms = <250>;
           flavor = "tap-preferred";
           bindings = <&clipboard_paste>, <&kp>;
       };
@@ -525,7 +538,7 @@
     default_layer {
       display-name = "Base";
       bindings = <
-        &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &tog 1 &mo 3 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp TAB &kp Q &kp W &kp E &kp R &kp T &none &screenshot3 0 0 &kp Y &kp U &kp I &kp O &kp P &kp BSLH &kp ESC &clipboard_a_key &clipboard_s_key &d_arrows 9 D &clipboard_f_key &kp G &none &kp HOME &kp END &kp LGUI &kp DEL &screenshot4 0 0 &kp H &kp J &k_mouse 4 K &kp L &kp SEMI &kp SQT &lshift_caps &kp Z &kp X &kp C &kp V &kp B &kp LCTRL &kp PG_UP &kp N &kp M &kp COMMA &kp DOT &kp FSLH &rshift_caps &mo 2 &kp GRAVE &caps_mods &kp LEFT &kp RIGHT &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_dual LS(ENTER) ENTER &kp UP &kp DOWN &kp LBKT &kp RBKT &mo 2
+        &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &mo 1 &mo 3 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp TAB &kp Q &kp W &kp E &kp R &kp T &none &screenshot3 0 0 &kp Y &kp U &kp I &kp O &kp P &kp BSLH &kp ESC &clipboard_a_key &clipboard_s_key &d_arrows 9 D &clipboard_f_key &kp G &none &kp HOME &kp END &kp LGUI &kp DEL &screenshot4 0 0 &kp H &kp J &k_mouse 4 K &kp L &kp SEMI &kp SQT &lshift_caps &kp Z &kp X &kp C &kp V &kp B &kp LCTRL &kp PG_UP &kp N &kp M &kp COMMA &kp DOT &kp FSLH &rshift_caps &mo 2 &kp GRAVE &caps_mods &kp LEFT &kp RIGHT &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_dual LS(ENTER) ENTER &kp UP &kp DOWN &kp LBKT &kp RBKT &mo 2
       >;
     };
     keypad {
@@ -541,7 +554,7 @@
     fn {
       display-name = "Fn";
       bindings = <
-        &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6 &tog 1                                           &mo 3 &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12
+        &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6 &mo 1                                           &mo 3 &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12
         &trans &trans &trans &trans &trans &trans  &none                                           &screenshot3 0 0&trans &trans &trans &trans  &trans  &trans
         &trans &trans &trans &trans &trans &trans  &none        &trans &trans &trans &trans        &screenshot4 0 0&trans &trans &trans &trans  &trans  &trans
         &trans &trans &trans &trans &trans &trans                      &trans &trans                     &trans &trans &trans &trans  &trans &trans
@@ -563,7 +576,7 @@
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &stage_up &trans &trans &none                                      &screenshot3 0 0&msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
-        &trans &kp A &stage_left &stage_down &stage_right &trans &none           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &tog 4 &trans
+        &trans &kp A &stage_left &stage_down &stage_right &trans &none           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &mouse_lock 4 &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &precision_enter 0 ENTER              &kp LEFT &kp DOWN &trans &trans &trans
       >;
@@ -588,7 +601,7 @@
     drag_mouse {
       display-name = "DragMouse";
       bindings = <
-        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &stage_up &none &none &none &screenshot3 0 0&msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &stage_left &stage_down &stage_right &none &none &none &none &trans &none &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
+        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &stage_up &none &none &none &screenshot3 0 0&msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &stage_left &stage_down &stage_right &none &none &none &none &trans &none &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &mouse_lock 4 &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
       >;
     };
     drag_mouse_cmd {
