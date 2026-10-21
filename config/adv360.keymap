@@ -230,7 +230,7 @@
           #binding-cells = <2>;
           tapping-term-ms = <150>;
           flavor = "balanced";
-          bindings = <&mouse_hold>, <&none>;
+          bindings = <&mo>, <&none>;
       };
 
 
@@ -272,26 +272,13 @@
           bindings = <&kp>, <&kp>;
       };
 
-      // Coordinate momentary mouse activation with a persistent layer lock.
-      mouse_hold: mouse_hold {
-          compatible = "zmk,behavior-momentary-layer";
-          #binding-cells = <1>;
-          locking;
-      };
-
-      mouse_lock: mouse_lock {
-          compatible = "zmk,behavior-toggle-layer";
-          #binding-cells = <1>;
-          locking;
-      };
-
       k_mouse: k_mouse {
           compatible = "zmk,behavior-hold-tap";
           label = "K_MOUSE";
           #binding-cells = <2>;
           tapping-term-ms = <150>;
           flavor = "balanced";
-          bindings = <&mouse_hold>, <&kp>;
+          bindings = <&mo>, <&kp>;
       };
 
       lmb_single: lmb_single {
@@ -504,6 +491,12 @@
   // Only expose drag-off on U while the mouse clutch is held.
   conditional_layers {
     compatible = "zmk,conditional-layers";
+    // Layer 11 is a persistent latch; activating it enables the existing
+    // Mouse layer 4 without toggling K's temporary mouse activation.
+    locked_mouse {
+      if-layers = <11>;
+      then-layer = <4>;
+    };
     drag_mouse {
       if-layers = <4 6>;
       then-layer = <7>;
@@ -576,7 +569,7 @@
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
         &trans &trans &trans &stage_up &trans &trans &none                                      &screenshot3 0 0&msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
-        &trans &kp A &stage_left &stage_down &stage_right &trans &none           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &mouse_lock 4 &trans
+        &trans &kp A &stage_left &stage_down &stage_right &trans &none           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &tog 11 &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &precision_enter 0 ENTER              &kp LEFT &kp DOWN &trans &trans &trans
       >;
@@ -601,7 +594,7 @@
     drag_mouse {
       display-name = "DragMouse";
       bindings = <
-        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &stage_up &none &none &none &screenshot3 0 0&msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &stage_left &stage_down &stage_right &none &none &none &none &trans &none &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &mouse_lock 4 &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
+        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &stage_up &none &none &none &screenshot3 0 0&msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &stage_left &stage_down &stage_right &none &none &none &none &trans &none &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &tog 11 &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
       >;
     };
     drag_mouse_cmd {
@@ -622,5 +615,17 @@
         &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &none &screenshot3 0 0&msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &trans &trans &screenshot4 0 0&msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
+    mouse_latch {
+      display-name = "MouseLock";
+      // Fully transparent so mouse and drag-state bindings keep their priority.
+      bindings = <
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+      >;
+    };
+
   };
 };
