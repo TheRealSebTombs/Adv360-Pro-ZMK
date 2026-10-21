@@ -450,42 +450,6 @@
           keep-mods = <(MOD_LGUI|MOD_RGUI)>;
       };
 
-      z_undo: z_undo {
-          compatible = "zmk,behavior-macro";
-          #binding-cells = <0>;
-          bindings = <&kp LG(Z)>;
-      };
-
-      z_hold: z_hold {
-          compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <2>;
-          tapping-term-ms = <250>;
-          flavor = "tap-preferred";
-          bindings = <&z_undo>, <&kp>;
-      };
-
-      z_key: z_key {
-          compatible = "zmk,behavior-mod-morph";
-          #binding-cells = <0>;
-          bindings = <&z_hold 0 Z>, <&kp LS(Z)>;
-          mods = <(MOD_LGUI|MOD_RGUI)>;
-          keep-mods = <(MOD_LGUI|MOD_RGUI)>;
-      };
-
-      backtick_option: backtick_option {
-          compatible = "zmk,behavior-macro";
-          #binding-cells = <0>;
-          bindings = <&kp LA(GRAVE)>;
-      };
-
-      backtick_hold: backtick_hold {
-          compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <2>;
-          tapping-term-ms = <250>;
-          flavor = "tap-preferred";
-          bindings = <&backtick_option>, <&kp>;
-      };
-
       c_paste_launcher: c_paste_launcher {
           compatible = "zmk,behavior-macro";
           #binding-cells = <0>;
@@ -506,6 +470,45 @@
           bindings = <&c_hold 0 C>, <&kp C>;
           mods = <(MOD_LGUI|MOD_RGUI)>;
           keep-mods = <(MOD_LGUI|MOD_RGUI)>;
+      };
+
+      // Ctrl+E becomes Option+E; Option+E becomes Option+Backtick.
+      // Modifier-morph consumes the triggering modifier rather than forwarding it.
+      e_option_grave: e_option_grave {
+          compatible = "zmk,behavior-macro";
+          #binding-cells = <0>;
+          bindings = <&kp LA(GRAVE)>;
+      };
+      e_option_e: e_option_e {
+          compatible = "zmk,behavior-macro";
+          #binding-cells = <0>;
+          bindings = <&kp LA(E)>;
+      };
+      e_opt_key: e_opt_key {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&kp E>, <&e_option_grave>;
+          mods = <(MOD_LALT|MOD_RALT)>;
+      };
+      e_key: e_key {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&e_opt_key>, <&e_option_e>;
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+      };
+
+      // Use one native scroll behavior, so Cmd switches only the axis.
+      scroll_up_cmd_left: scroll_up_cmd_left {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&msc SCRL_UP>, <&msc SCRL_LEFT>;
+          mods = <(MOD_LGUI|MOD_RGUI)>;
+      };
+      scroll_down_cmd_right: scroll_down_cmd_right {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&msc SCRL_DOWN>, <&msc SCRL_RIGHT>;
+          mods = <(MOD_LGUI|MOD_RGUI)>;
       };
 
       // Physical Enter: hold for Shift+Enter, tap for Enter.
@@ -575,17 +578,17 @@
     default_layer {
       display-name = "Base";
       bindings = <
-        &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &mo 1 &mo 3 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp TAB &kp Q &kp W &kp E &kp R &kp T &none &screenshot3 0 0 &kp Y &kp U &kp I &kp O &kp P &kp BSLH &kp ESC &clipboard_a_key &clipboard_s_key &d_arrows 9 D &clipboard_f_key &kp G &none &kp HOME &kp END &kp LGUI &kp DEL &screenshot4 0 0 &kp H &kp J &k_mouse 4 K &kp L &kp SEMI &kp SQT &kp LSHFT &z_key &kp X &c_key &kp V &kp B &kp LCTRL &kp PG_UP &kp N &kp M &kp COMMA &kp DOT &kp FSLH &rshift_caps &mo 2 &backtick_hold 0 GRAVE &caps_mods &kp LEFT &kp RIGHT &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_dual LS(ENTER) ENTER &kp UP &kp DOWN &kp LBKT &kp RBKT &mo 2
+        &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &mo 1 &mo 3 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp TAB &kp Q &kp W &e_key &kp R &kp T &none &screenshot3 0 0 &kp Y &kp U &kp I &kp O &kp P &kp BSLH &kp ESC &clipboard_a_key &clipboard_s_key &d_arrows 9 D &clipboard_f_key &kp G &none &kp HOME &kp END &kp LGUI &kp DEL &screenshot4 0 0 &kp H &kp J &k_mouse 4 K &kp L &kp SEMI &kp SQT &kp LSHFT &kp Z &kp X &c_key &kp V &kp B &kp LCTRL &kp PG_UP &kp N &kp M &kp COMMA &kp DOT &kp FSLH &rshift_caps &mo 2 &kp GRAVE &caps_mods &kp LEFT &kp RIGHT &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_dual LS(ENTER) ENTER &kp UP &kp DOWN &kp LBKT &kp RBKT &mo 2
       >;
     };
     keypad {
       display-name = "Keypad";
       bindings = <
         &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &trans                                                           &mo 3 &kp N6 &kp KP_NUM &kp KP_EQUAL &kp KP_DIVIDE &kp KP_MULTIPLY &kp MINUS
-        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                            &screenshot3 0 0&kp Y  &kp KP_N7  &kp KP_N8    &kp KP_N9     &kp KP_MINUS    &kp BSLH
+        &kp TAB   &kp Q     &kp W    &e_key    &kp R      &kp T  &none                                                            &screenshot3 0 0&kp Y  &kp KP_N7  &kp KP_N8    &kp KP_N9     &kp KP_MINUS    &kp BSLH
         &kp ESC   &clipboard_a_key &clipboard_s_key &kp D &clipboard_f_key &kp G  &none           &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &screenshot4 0 0&kp H  &kp KP_N4  &kp KP_N5    &kp KP_N6     &kp KP_PLUS     &kp SQT
-        &kp LSHFT &z_key     &kp X    &c_key    &kp V      &kp B                            &kp HOME &kp PG_UP                           &kp N  &kp KP_N1  &kp KP_N2    &kp KP_N3     &kp KP_ENTER    &rshift_caps
-        &mo 2     &backtick_hold 0 GRAVE &caps_mods &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END  &kp PG_DN &enter_dual LS(ENTER) ENTER &kp KP_N0              &kp UP     &kp DOWN     &kp KP_DOT    &kp RBKT        &mo 2
+        &kp LSHFT &kp Z     &kp X    &c_key    &kp V      &kp B                            &kp HOME &kp PG_UP                           &kp N  &kp KP_N1  &kp KP_N2    &kp KP_N3     &kp KP_ENTER    &rshift_caps
+        &mo 2     &kp GRAVE &caps_mods &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END  &kp PG_DN &enter_dual LS(ENTER) ENTER &kp KP_N0              &kp UP     &kp DOWN     &kp KP_DOT    &kp RBKT        &mo 2
       >;
     };
     fn {
@@ -612,8 +615,8 @@
       display-name = "Red";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &stage_up &trans &trans &none                                      &screenshot3 0 0&msc SCRL_UP &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
-        &trans &kp A &stage_left &stage_down &stage_right &trans &none           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &trans &trans
+        &trans &trans &trans &stage_up &trans &trans &none                                      &screenshot3 0 0&scroll_up_cmd_left &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
+        &trans &kp A &stage_left &stage_down &stage_right &trans &none           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&scroll_down_cmd_right &mkp MB1 &trans &o_click 0 0 &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &precision_enter 0 ENTER              &kp LEFT &kp DOWN &trans &trans &trans
       >;
@@ -638,7 +641,7 @@
     drag_mouse {
       display-name = "DragMouse";
       bindings = <
-        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &stage_up &none &none &none &screenshot3 0 0&msc SCRL_UP &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &stage_left &stage_down &stage_right &none &none &none &none &trans &none &screenshot4 0 0&msc SCRL_DOWN &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
+        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &none &none &none &stage_up &none &none &none &screenshot3 0 0&scroll_up_cmd_left &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &stage_left &stage_down &stage_right &none &none &none &none &trans &none &screenshot4 0 0&scroll_down_cmd_right &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
       >;
     };
     drag_mouse_cmd {
@@ -650,7 +653,7 @@
     arrows {
       display-name = "Arrows";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp A &kp S &trans &kp F &trans &none &screenshot3 0 0&msc SCRL_UP &trans &kp UP &mouse_history LG(RBKT) LG(LBKT)&trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &arrows_cmd &trans &screenshot4 0 0&msc SCRL_DOWN &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp A &kp S &trans &kp F &trans &none &screenshot3 0 0&scroll_up_cmd_left &trans &kp UP &mouse_history LG(RBKT) LG(LBKT)&trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &arrows_cmd &trans &screenshot4 0 0&scroll_down_cmd_right &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
     arrows_cmd {
