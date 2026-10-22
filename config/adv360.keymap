@@ -653,13 +653,13 @@
     arrows {
       display-name = "Arrows";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp A &kp S &trans &kp F &trans &none &screenshot3 0 0&scroll_up_cmd_left &trans &kp UP &mouse_history LG(RBKT) LG(LBKT)&trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &arrows_cmd &trans &screenshot4 0 0&scroll_down_cmd_right &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp A &kp S &trans &kp F &trans &none &kp F23&scroll_up_cmd_left &trans &kp UP &mouse_history LG(RBKT) LG(LBKT)&trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &arrows_cmd &trans &kp F24&scroll_down_cmd_right &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
     arrows_cmd {
       display-name = "ArrowsCmd";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &none &screenshot3 0 0&msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &trans &trans &screenshot4 0 0&msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &none &kp F23&msc SCRL_LEFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &trans &trans &kp F24&msc SCRL_RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
   };
