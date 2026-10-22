@@ -497,33 +497,22 @@
           mods = <(MOD_LCTL|MOD_RCTL)>;
       };
 
-      // D Arrows only: Option selects horizontal scroll; K Mouse retains Cmd.
-      // The Option modifier itself still reaches the host; test application conflicts.
+      // Shared by D Arrows and K Mouse (including drag and Cmd companion layers):
+      // plain or Cmd + Y/H sends vertical scroll; Option + Y/H sends horizontal scroll.
+      // Modifiers also reach macOS, so host apps/BTT may interpret events as zoom.
+      // Horizontal speed calibrated at 60 vs vertical 30; both use &msc's
+      // shared 100 ms acceleration ramp and exponent 1. Tune after hardware test.
       scroll_up_opt_left: scroll_up_opt_left {
           compatible = "zmk,behavior-mod-morph";
           #binding-cells = <0>;
-          bindings = <&msc SCRL_UP>, <&msc SCRL_LEFT>;
+          bindings = <&msc SCRL_UP>, <&msc MOVE_X(-60)>;
           mods = <(MOD_LALT|MOD_RALT)>;
       };
       scroll_down_opt_right: scroll_down_opt_right {
           compatible = "zmk,behavior-mod-morph";
           #binding-cells = <0>;
-          bindings = <&msc SCRL_DOWN>, <&msc SCRL_RIGHT>;
+          bindings = <&msc SCRL_DOWN>, <&msc MOVE_X(60)>;
           mods = <(MOD_LALT|MOD_RALT)>;
-      };
-
-      // Use one native scroll behavior, so Cmd switches only the axis.
-      scroll_up_cmd_left: scroll_up_cmd_left {
-          compatible = "zmk,behavior-mod-morph";
-          #binding-cells = <0>;
-          bindings = <&msc SCRL_UP>, <&msc SCRL_LEFT>;
-          mods = <(MOD_LGUI|MOD_RGUI)>;
-      };
-      scroll_down_cmd_right: scroll_down_cmd_right {
-          compatible = "zmk,behavior-mod-morph";
-          #binding-cells = <0>;
-          bindings = <&msc SCRL_DOWN>, <&msc SCRL_RIGHT>;
-          mods = <(MOD_LGUI|MOD_RGUI)>;
       };
 
       // Physical Enter: hold for Shift+Enter, tap for Enter.
@@ -593,7 +582,7 @@
     default_layer {
       display-name = "Base";
       bindings = <
-        &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &mo 1 &mo 3 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp TAB &kp Q &kp W &e_key &kp R &kp T &kp F23 &screenshot3 0 0 &kp Y &kp U &kp I &kp O &kp P &kp BSLH &kp ESC &clipboard_a_key &clipboard_s_key &d_arrows 9 D &clipboard_f_key &kp G &kp F24 &kp HOME &kp END &kp LGUI &kp DEL &screenshot4 0 0 &kp H &kp J &k_mouse 4 K &kp L &kp SEMI &kp SQT &kp LSHFT &kp Z &kp X &c_key &kp V &kp B &kp LCTRL &kp PG_UP &kp N &kp M &kp COMMA &kp DOT &kp FSLH &rshift_caps &mo 2 &kp GRAVE &caps_mods &kp LEFT &kp RIGHT &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_dual LS(ENTER) ENTER &kp UP &kp DOWN &kp LBKT &kp RBKT &mo 2
+        &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &mo 1 &mo 3 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp TAB &kp Q &kp W &e_key &kp R &kp T &none &screenshot3 0 0 &kp Y &kp U &kp I &kp O &kp P &kp BSLH &kp ESC &clipboard_a_key &clipboard_s_key &d_arrows 9 D &clipboard_f_key &kp G &none &kp HOME &kp END &kp LGUI &kp DEL &screenshot4 0 0 &kp H &kp J &k_mouse 4 K &kp L &kp SEMI &kp SQT &kp LSHFT &kp Z &kp X &c_key &kp V &kp B &kp LCTRL &kp PG_UP &kp N &kp M &kp COMMA &kp DOT &kp FSLH &rshift_caps &mo 2 &kp GRAVE &caps_mods &kp LEFT &kp RIGHT &kp SPACE &kp LGUI &kp LALT &kp PG_DN &kp BSPC &enter_dual LS(ENTER) ENTER &kp UP &kp DOWN &kp LBKT &kp RBKT &mo 2
       >;
     };
     keypad {
@@ -630,7 +619,7 @@
       display-name = "Red";
       bindings = <
         &trans &trans &trans &trans &trans &trans &trans                                      &mo 3  &trans &trans &trans &trans &trans &trans
-        &trans &trans &trans &stage_up &trans &trans &none                                      &screenshot3 0 0&scroll_up_opt_left &drag_on &none &mouse_history LG(RBKT) LG(LBKT) &trans &trans
+        &trans &trans &trans &stage_up &trans &trans &none                                      &screenshot3 0 0&scroll_up_opt_left &drag_on &none &kp O &trans &trans
         &trans &kp A &stage_left &stage_down &stage_right &trans &none           &trans &trans &mouse_cmd &trans               &screenshot4 0 0&scroll_down_opt_right &mkp MB1 &trans &o_click 0 0 &trans &trans
         &trans &trans &trans &trans &trans &trans                                             &trans &trans                    &trans &trans &kp UP &kp RIGHT &trans &trans
         &trans &trans &trans &trans &trans                                      &trans &mouse_cmd &trans &trans &trans &precision_enter 0 ENTER              &kp LEFT &kp DOWN &trans &trans &trans
@@ -656,7 +645,7 @@
     drag_mouse {
       display-name = "DragMouse";
       bindings = <
-        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &kp TAB &none &none &stage_up &none &none &none &screenshot3 0 0&scroll_up_opt_left &drag_off &none &mouse_history LG(RBKT) LG(LBKT) &none &none &drag_cancel &none &stage_left &stage_down &stage_right &none &none &none &none &trans &none &screenshot4 0 0&scroll_down_opt_right &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
+        &none &none &none &none &none &none &none &mo 3 &none &none &none &none &none &none &kp TAB &none &none &stage_up &none &none &none &screenshot3 0 0&scroll_up_opt_left &drag_off &none &kp O &none &none &drag_cancel &none &stage_left &stage_down &stage_right &none &none &none &none &trans &none &screenshot4 0 0&scroll_down_opt_right &mkp MB1 &trans &o_click 0 0 &none &none &kp LSHFT &none &none &none &none &none &kp LCTRL &none &none &none &kp UP &kp RIGHT &none &kp RSHFT &none &none &none &none &none &none &trans &kp LALT &none &none &none &kp LEFT &kp DOWN &none &none &none
       >;
     };
     drag_mouse_cmd {
@@ -668,7 +657,7 @@
     arrows {
       display-name = "Arrows";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp A &kp S &trans &kp F &trans &none &screenshot3 0 0&scroll_up_opt_left &trans &kp UP &mouse_history LG(RBKT) LG(LBKT)&trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &arrows_cmd &trans &screenshot4 0 0&scroll_down_opt_right &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp A &kp S &trans &kp F &trans &none &screenshot3 0 0&scroll_up_opt_left &trans &kp UP &kp O&trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &arrows_cmd &trans &screenshot4 0 0&scroll_down_opt_right &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
     arrows_cmd {
