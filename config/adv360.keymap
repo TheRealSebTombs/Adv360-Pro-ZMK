@@ -497,6 +497,21 @@
           mods = <(MOD_LCTL|MOD_RCTL)>;
       };
 
+      // D Arrows only: Option selects horizontal scroll; K Mouse retains Cmd.
+      // The Option modifier itself still reaches the host; test application conflicts.
+      scroll_up_opt_left: scroll_up_opt_left {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&msc SCRL_UP>, <&msc SCRL_LEFT>;
+          mods = <(MOD_LALT|MOD_RALT)>;
+      };
+      scroll_down_opt_right: scroll_down_opt_right {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&msc SCRL_DOWN>, <&msc SCRL_RIGHT>;
+          mods = <(MOD_LALT|MOD_RALT)>;
+      };
+
       // Use one native scroll behavior, so Cmd switches only the axis.
       scroll_up_cmd_left: scroll_up_cmd_left {
           compatible = "zmk,behavior-mod-morph";
@@ -653,7 +668,7 @@
     arrows {
       display-name = "Arrows";
       bindings = <
-        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp A &kp S &trans &kp F &trans &none &screenshot3 0 0&scroll_up_cmd_left &trans &kp UP &mouse_history LG(RBKT) LG(LBKT)&trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &arrows_cmd &trans &screenshot4 0 0&scroll_down_cmd_right &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
+        &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp A &kp S &trans &kp F &trans &none &screenshot3 0 0&scroll_up_opt_left &trans &kp UP &mouse_history LG(RBKT) LG(LBKT)&trans &trans &trans &trans &trans &trans &trans &trans &none &trans &trans &arrows_cmd &trans &screenshot4 0 0&scroll_down_opt_right &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &arrows_cmd &trans &trans &trans &trans &trans &trans &trans &trans &trans
       >;
     };
     arrows_cmd {
