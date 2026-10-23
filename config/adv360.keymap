@@ -1,3 +1,4 @@
+/* Rebuild marker: re-trigger the GitHub Actions firmware build; no functional keymap changes. */
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/modifiers.h>
